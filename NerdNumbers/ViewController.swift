@@ -10,27 +10,33 @@ import UIKit
 import QuartzCore
 
 class ViewController: UIViewController {
-    @IBOutlet weak var beginButton: UIButton!
+
+    @IBOutlet var myButtons: [UIButton]!
+    @IBOutlet weak var difficultyLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //beginButton.titleLabel!.font = UIFont (name: "ArchitectsDaughter-Bold", size: 17)
-        //beginButton.titleLabel!.textColor = UIColor.white
-        //beginButton.titleLabel!.font =
-        beginButton.layer.shadowColor = UIColor.darkGray.cgColor
-        beginButton.layer.masksToBounds = false
-        beginButton.layer.shadowOpacity = 1.0
-        beginButton.layer.shadowRadius = 0
-        beginButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        // Format the labels
+        difficultyLabel.font = UIFont (name: "ArialRoundedMTBold", size: 28)
+      
+        titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
+        
+        // Format the buttons
+        for button in myButtons {
+            button.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 19)
+            button.layer.shadowColor = UIColor.darkGray.cgColor
+            button.layer.masksToBounds = false
+            button.layer.shadowOpacity = 1.0
+            button.layer.shadowRadius = 0
+            button.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        }
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    @IBAction func beginButtonPressed(_ sender: UIButton) {
     }
 
 }

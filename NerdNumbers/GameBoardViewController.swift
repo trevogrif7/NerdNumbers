@@ -10,39 +10,45 @@ import UIKit
 
 class GameBoardViewController: UIViewController {
 
-    @IBOutlet weak var zeroButton: UIButton!
-    @IBOutlet weak var oneButton: UIButton!
-    @IBOutlet weak var clearButton: UIButton!
+    // Define IB Outlets
+    @IBOutlet var myButtons: [UIButton]!
     @IBOutlet weak var binaryLabel: UILabel!
     @IBOutlet weak var whatIsTheBinaryValueLabel: UILabel!
     @IBOutlet weak var decimalLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var counterLabel: UILabel!
+
+    // Define variables
+    var timer = Timer()
+    var timeCounter = 0.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        decimalLabel.layer.borderColor = UIColor.white.cgColor
-//        decimalLabel.layer.borderWidth = 1.0
+        // Format the labels
+        decimalLabel.font = UIFont (name: "ArialMT", size: 80)
 
         binaryLabel.layer.borderColor = UIColor.darkGray.cgColor
         binaryLabel.layer.borderWidth = 1.0
+        binaryLabel.font = UIFont (name: "ArialMT", size: 38)
         
-        zeroButton.layer.shadowColor = UIColor.darkGray.cgColor
-        zeroButton.layer.masksToBounds = false
-        zeroButton.layer.shadowOpacity = 1.0
-        zeroButton.layer.shadowRadius = 0
-        zeroButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        whatIsTheBinaryValueLabel.font = UIFont (name: "ArialRoundedMTBold", size: 25)
         
-        oneButton.layer.shadowColor = UIColor.darkGray.cgColor
-        oneButton.layer.masksToBounds = false
-        oneButton.layer.shadowOpacity = 1.0
-        oneButton.layer.shadowRadius = 0
-        oneButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
         
-        clearButton.layer.shadowColor = UIColor.darkGray.cgColor
-        clearButton.layer.masksToBounds = false
-        clearButton.layer.shadowOpacity = 1.0
-        clearButton.layer.shadowRadius = 0
-        clearButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        // Format the buttons
+        for button in myButtons {
+            button.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 30)
+            button.layer.shadowColor = UIColor.darkGray.cgColor
+            button.layer.masksToBounds = false
+            button.layer.shadowOpacity = 1.0
+            button.layer.shadowRadius = 0
+            button.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        }
+        
+        // Begin timer
+        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
 
     }
 
@@ -51,15 +57,20 @@ class GameBoardViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func incrementTimer () {
+        
+        // Increment the time counter variable
+        timeCounter += 0.1
+        
+        // Put a 2 minute cap on timeCounter so that it doesn't count forever
+        if timeCounter == 120.0 {
+            timeCounter = 0.0
+        }
+        
+        timerLabel.text = String(timeCounter)
+        
     }
-    */
 
+
+    
 }
