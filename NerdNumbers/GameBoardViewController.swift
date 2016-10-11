@@ -37,6 +37,8 @@ class GameBoardViewController: UIViewController {
         
         titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
         
+        timerLabel.font = UIFont (name: "Courier-Bold", size: 30)
+        
         // Format the buttons
         for button in myButtons {
             button.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 30)
@@ -62,13 +64,16 @@ class GameBoardViewController: UIViewController {
         // Increment the time counter variable
         timeCounter += 0.1
         
-        // Put a 2 minute cap on timeCounter so that it doesn't count forever
-        if timeCounter == 120.0 {
+        // Put a cap on timeCounter so that it doesn't count forever
+        if timeCounter > 10.0 {
             timeCounter = 0.0
+            
+            timerLabel.text = "TIME'S UP!"
+            timer.invalidate()
+            return
         }
         
-        timerLabel.text = String(timeCounter)
-        
+        timerLabel.text = String(format: "%.1f", timeCounter)
     }
 
 
