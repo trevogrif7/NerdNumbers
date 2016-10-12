@@ -18,10 +18,15 @@ class GameBoardViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var counterLabel: UILabel!
+    @IBOutlet weak var countdownLabel: UILabel!
 
     // Define variables
-    var timer = Timer()
-    var timeCounter = 0.0
+    var countdownTimer = Timer()
+    var countdownTimeCounter = 3
+    
+    var gameTimer = Timer()
+    var gameTimeCounter = 0.0
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +42,10 @@ class GameBoardViewController: UIViewController {
         titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
         
         timerLabel.font = UIFont (name: "Courier-Bold", size: 30)
+        timerLabel.text = "0.0"
+        
+        countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 375)
+        countdownLabel.text = "3"
         
         counterLabel.font = UIFont (name: "Courier-Bold", size: 13)
         
@@ -58,7 +67,7 @@ class GameBoardViewController: UIViewController {
         enterButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         
         // Begin timer
-        timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameBoardViewController.startGame), userInfo: nil, repeats: true)
 
     }
 
@@ -67,22 +76,57 @@ class GameBoardViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // Increments the timer
-    func incrementTimer () {
+    func startGame() {
         
-        // Increment the time counter variable
-        timeCounter += 0.1
-        
-        // Put a cap on timeCounter so that it doesn't count forever
-        if timeCounter > 120.0 {
-            timeCounter = 0.0
+        // Decrement countdown timer
+        countdownTimeCounter -= 1
+
+        // Loop through one last time so we can display "GO!" for one second
+        if countdownTimeCounter <= 0 {
+
+            // Begin Game
+            countdownLabel.text = "GO!"
+            countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 175)
+
+            if countdownTimeCounter <= -1 {
             
-            timerLabel.text = "TIME'S UP!"
-            timer.invalidate()
+                // Turn off countdown timer
+                countdownTimer.invalidate()
+            
+                // Begin game timer
+                gameTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
+            
+                // Exit function
+                return
+            }
+     
+            // Exit function so we don't display zero
             return
         }
         
-        timerLabel.text = String(format: "%.1f", timeCounter)
+        countdownLabel.text = String(countdownTimeCounter)
+
+    }
+    
+    // Increments the timer
+    func incrementTimer () {
+        
+        // Stop displaying count down label
+        countdownLabel.isHidden = true
+        
+        // Increment the time counter variable
+        gameTimeCounter += 0.1
+        
+        // Put a cap on timeCounter so that it doesn't count forever
+        if gameTimeCounter > 120.0 {
+            gameTimeCounter = 0.0
+            
+            timerLabel.text = "TIME'S UP!"
+            gameTimer.invalidate()
+            return
+        }
+        
+        timerLabel.text = String(format: "%.1f", gameTimeCounter)
     }
 
     @IBAction func enterButtonPressed(_ sender: UIButton) {
