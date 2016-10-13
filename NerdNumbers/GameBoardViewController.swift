@@ -11,7 +11,7 @@ import UIKit
 class GameBoardViewController: UIViewController {
 
     // Define IB Outlets
-    @IBOutlet var myButtons: [UIButton]!
+    @IBOutlet var myBinaryDigitButtons: [UIButton]!
     @IBOutlet weak var enterButton: UIButton!
     @IBOutlet weak var whatIsTheBinaryValueLabel: UILabel!
     @IBOutlet weak var decimalLabel: UILabel!
@@ -33,12 +33,21 @@ class GameBoardViewController: UIViewController {
     // Flag to tell us when it's time to end the countdown before the start of the game
     var timeToStartGame = false
 
+    // Array to hold binary digits in order
+    var binaryDigitArray : [String] = ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"]
+    
+    // Holds given answer in binary format
+    var binaryValue : String = ""
+    
+    // Holds given answer in decimal format
+    var decimalValue : Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Format the labels
         decimalLabel.font = UIFont (name: "ArialMT", size: 80)
+        decimalLabel.text = ""
 
         decimalLabel.layer.borderColor = UIColor.darkGray.cgColor
         decimalLabel.layer.borderWidth = 2.0
@@ -56,13 +65,14 @@ class GameBoardViewController: UIViewController {
         counterLabel.font = UIFont (name: "Courier-Bold", size: 13)
         
         // Format the buttons
-        for button in myButtons {
+        for button in myBinaryDigitButtons {
             //button.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 30)
             button.layer.shadowColor = UIColor.darkGray.cgColor
             button.layer.masksToBounds = false
             button.layer.shadowOpacity = 1.0
             button.layer.shadowRadius = 0
             button.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+            button.isEnabled = false
         }
         
         enterButton.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 30)
@@ -71,6 +81,7 @@ class GameBoardViewController: UIViewController {
         enterButton.layer.shadowOpacity = 1.0
         enterButton.layer.shadowRadius = 0
         enterButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+        enterButton.isEnabled = false
         
         // Begin timer
         countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameBoardViewController.startGame), userInfo: nil, repeats: true)
@@ -92,6 +103,16 @@ class GameBoardViewController: UIViewController {
             
             // Begin game timer
             gameTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
+            
+            // Enable inputs and display first value
+            enterButton.isEnabled = true
+            
+            for button in myBinaryDigitButtons {
+                button.isEnabled = true
+            }
+            
+            // Display value to be converted
+            displayNextValue()
             
             // Exit function
             return
@@ -127,6 +148,21 @@ class GameBoardViewController: UIViewController {
         }
     }
     
+    // TODO: figure out which segue got us to this viewcontroller and set difficulty based on that
+    func displayNextValue() {
+        let easyRandomNumber = Int(arc4random_uniform(255) + 1)
+        decimalLabel.text = String(easyRandomNumber)
+        
+        // Medium mode
+        //let mediumRandomNumber = Int(arc4random_uniform(4095) + 1)
+        //decimalLabel.text = String(easyRandomNumber)
+        
+        // Hard mode
+        //let hardRandomNumber = Int(arc4random_uniform(65535) + 1)
+        //decimalLabel.text = String(easyRandomNumber)
+
+    }
+    
     // Increments the timer
     func incrementTimer () {
         
@@ -137,7 +173,7 @@ class GameBoardViewController: UIViewController {
         gameTimeCounter += 0.1
         
         // Put a cap on timeCounter so that it doesn't count forever
-        if gameTimeCounter > 120.0 {
+        if gameTimeCounter > 200.0 {
             gameTimeCounter = 0.0
             
             timerLabel.text = "TIME'S UP!"
@@ -150,13 +186,27 @@ class GameBoardViewController: UIViewController {
 
     @IBAction func enterButtonPressed(_ sender: UIButton) {
         
-        // TODO: If binary value matches decimal value
-        // TODO: display message for correct answer (maybe just go to next number?)
         
-        if decimalLabel.text != "" {  // TODO: Change comparison to be if the values match correctly
+        // Fill an array, in order (based on the tags set in the Attributes Inspector), with the binary digits
+        for button in myBinaryDigitButtons {
+            binaryDigitArray[button.tag] = button.titleLabel!.text!
+        }
+        
+        // Reverse order of array to put it in proper binary order
+        binaryDigitArray.reverse()
+        
+        // Join array into one string
+        binaryValue = binaryDigitArray.joined()
+        
+        // Convert binary number to decimal number for comparison
+        decimalValue = Int(binaryValue, radix: 2)!
+        
+        // If binary value matches decimal value go to next number
+        if decimalLabel.text == String(decimalValue) {
             switch counterLabel.text! {
             case "1/10":
                 counterLabel.text = "2/10"
+                print("correct")         // TODO: display message for correct answers
             case "2/10":
                 counterLabel.text = "3/10"
             case "3/10":
@@ -175,47 +225,36 @@ class GameBoardViewController: UIViewController {
                 counterLabel.text = "10/10"
             case "10/10":
                 break
-                // Display the score card with your time and your best times for the current difficulty
+                // TODO: Display the score card with your time and your best times for the current difficulty
             default:
                 break
             }
             
-            // TODO: Check flag to see if this is an easy, medium, or hard game then go to next number
-            
-            // Easy mode
-            let easyRandomNumber = Int(arc4random_uniform(256))
-            decimalLabel.text = String(easyRandomNumber)
-          
-            // Medium mode
-            //let mediumRandomNumber = Int(arc4random_uniform(4096))
-            //decimalLabel.text = String(easyRandomNumber)
-            
-            // Hard mode
-            //let hardRandomNumber = Int(arc4random_uniform(65536))
-            //decimalLabel.text = String(easyRandomNumber)
-
+            // Display next value
+            displayNextValue()
         }
         
         // Binary value does not match decimal value, try again
         else {
 
             // Set all binary digits to "0"
-            for button in myButtons {
+            for button in myBinaryDigitButtons {
                 button.setTitle("0", for: UIControlState.normal)
             }
             
-            // TODO: display message for incorrect answer
+            // TODO: display message for incorrect answers
+            print("Incorrect")
         }
     }
     
     // Toggle binary digits between "1" and "0"
     @IBAction func binaryDigitButtonPressed(_ sender: UIButton) {
         
-        if sender.titleLabel?.text == "0" {
+        if sender.titleLabel!.text == "0" {
             sender.setTitle("1", for: UIControlState.normal)
-        } else {
+        }
+        else {
             sender.setTitle("0", for: UIControlState.normal)
-
         }
        
     }

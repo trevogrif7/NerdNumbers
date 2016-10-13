@@ -178,7 +178,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jja-mK-ZhI">
+                            <button opaque="NO" tag="15" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jja-mK-ZhI">
                                 <frame key="frameInset" minX="13" minY="360" width="21" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
@@ -189,7 +189,7 @@
                                     <action selector="binaryDigitButtonPressed:" destination="xWc-xi-Nl2" eventType="touchUpInside" id="Awc-Fg-G3G"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDx-Hl-v8R">
+                            <button opaque="NO" tag="14" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDx-Hl-v8R">
                                 <frame key="frameInset" minX="33" minY="360" width="21" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
@@ -372,22 +372,22 @@
                         <outlet property="timerLabel" destination="IIY-PU-kK2" id="hBS-od-WTP"/>
                         <outlet property="titleLabel" destination="p0t-vm-HaV" id="8vY-zB-ePk"/>
                         <outlet property="whatIsTheBinaryValueLabel" destination="ajm-Mz-3ye" id="SLH-wK-2oJ"/>
-                        <outletCollection property="myButtons" destination="wYI-VJ-Smo" collectionClass="NSMutableArray" id="nGB-2Z-zGH"/>
-                        <outletCollection property="myButtons" destination="vEH-KU-btr" collectionClass="NSMutableArray" id="rMH-f9-kyC"/>
-                        <outletCollection property="myButtons" destination="7Rv-do-2kt" collectionClass="NSMutableArray" id="fqx-po-cbV"/>
-                        <outletCollection property="myButtons" destination="YMH-Vn-Fam" collectionClass="NSMutableArray" id="Q60-Mx-Toi"/>
-                        <outletCollection property="myButtons" destination="aYW-hg-wHE" collectionClass="NSMutableArray" id="hZL-It-eqf"/>
-                        <outletCollection property="myButtons" destination="hog-Xi-J66" collectionClass="NSMutableArray" id="Uu9-cJ-Do2"/>
-                        <outletCollection property="myButtons" destination="otV-ac-YXz" collectionClass="NSMutableArray" id="cav-LX-ZV8"/>
-                        <outletCollection property="myButtons" destination="P8B-Ku-UgI" collectionClass="NSMutableArray" id="7bR-Be-ecY"/>
-                        <outletCollection property="myButtons" destination="Aio-Sd-n6g" collectionClass="NSMutableArray" id="xqg-zq-snS"/>
-                        <outletCollection property="myButtons" destination="0LA-6K-NPE" collectionClass="NSMutableArray" id="wfZ-fV-nL2"/>
-                        <outletCollection property="myButtons" destination="bIQ-GD-7W9" collectionClass="NSMutableArray" id="3VG-IX-5Uj"/>
-                        <outletCollection property="myButtons" destination="LGs-9K-ePa" collectionClass="NSMutableArray" id="Iq9-4b-k9d"/>
-                        <outletCollection property="myButtons" destination="2rU-b6-Ay5" collectionClass="NSMutableArray" id="Ara-iP-kds"/>
-                        <outletCollection property="myButtons" destination="Ncs-nX-5Oy" collectionClass="NSMutableArray" id="ctB-CR-lOk"/>
-                        <outletCollection property="myButtons" destination="TDx-Hl-v8R" collectionClass="NSMutableArray" id="1CE-4H-MrG"/>
-                        <outletCollection property="myButtons" destination="jja-mK-ZhI" collectionClass="NSMutableArray" id="7iA-QY-ExM"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="jja-mK-ZhI" collectionClass="NSMutableArray" id="oKq-EI-wTK"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="TDx-Hl-v8R" collectionClass="NSMutableArray" id="Dmz-9v-3wZ"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="Ncs-nX-5Oy" collectionClass="NSMutableArray" id="kO5-lc-b1Q"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="2rU-b6-Ay5" collectionClass="NSMutableArray" id="aA8-Cf-3s4"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="LGs-9K-ePa" collectionClass="NSMutableArray" id="Mpr-Rq-HG6"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="bIQ-GD-7W9" collectionClass="NSMutableArray" id="FGh-2z-zmP"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="0LA-6K-NPE" collectionClass="NSMutableArray" id="Obh-ca-lyC"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="Aio-Sd-n6g" collectionClass="NSMutableArray" id="7zC-5i-WST"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="vEH-KU-btr" collectionClass="NSMutableArray" id="MDR-5z-1q1"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="7Rv-do-2kt" collectionClass="NSMutableArray" id="Zcy-6H-w7w"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="YMH-Vn-Fam" collectionClass="NSMutableArray" id="TXA-TE-sJ8"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="aYW-hg-wHE" collectionClass="NSMutableArray" id="Lpk-mr-q3X"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="otV-ac-YXz" collectionClass="NSMutableArray" id="yLK-zJ-QeD"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="P8B-Ku-UgI" collectionClass="NSMutableArray" id="o32-Gl-yuw"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="wYI-VJ-Smo" collectionClass="NSMutableArray" id="KhL-ts-PLf"/>
+                        <outletCollection property="myBinaryDigitButtons" destination="hog-Xi-J66" collectionClass="NSMutableArray" id="7ss-HM-o44"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xhg-0L-BEg" userLabel="First Responder" sceneMemberID="firstResponder"/>
