@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		082CF9FB1DAF1DA5009F0D1B /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082CF9FA1DAF1DA5009F0D1B /* UIViewExtensions.swift */; };
 		085345DF1DA768FB004904C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085345DE1DA768FB004904C8 /* AppDelegate.swift */; };
 		085345E11DA768FB004904C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085345E01DA768FB004904C8 /* ViewController.swift */; };
 		085345E41DA768FB004904C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 085345E21DA768FB004904C8 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		082CF9FA1DAF1DA5009F0D1B /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		085345DB1DA768FB004904C8 /* NerdNumbers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NerdNumbers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085345DE1DA768FB004904C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		085345E01DA768FB004904C8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +64,7 @@
 				085345E01DA768FB004904C8 /* ViewController.swift */,
 				085345E21DA768FB004904C8 /* Main.storyboard */,
 				085346171DA9F56C004904C8 /* GameBoardViewController.swift */,
+				082CF9FA1DAF1DA5009F0D1B /* UIViewExtensions.swift */,
 				085345E81DA768FB004904C8 /* Assets.xcassets */,
 				085345EA1DA768FB004904C8 /* LaunchScreen.storyboard */,
 				085345ED1DA768FB004904C8 /* Info.plist */,
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				085345E11DA768FB004904C8 /* ViewController.swift in Sources */,
+				082CF9FB1DAF1DA5009F0D1B /* UIViewExtensions.swift in Sources */,
 				085346181DA9F56C004904C8 /* GameBoardViewController.swift in Sources */,
 				085345E71DA768FB004904C8 /* NerdNumbers.xcdatamodeld in Sources */,
 				085345DF1DA768FB004904C8 /* AppDelegate.swift in Sources */,

@@ -20,12 +20,18 @@ class GameBoardViewController: UIViewController {
     @IBOutlet weak var counterLabel: UILabel!
     @IBOutlet weak var countdownLabel: UILabel!
 
-    // Define variables
+    //// Define variables ////
+    
+    // Variables to regulate the countdown timer
     var countdownTimer = Timer()
     var countdownTimeCounter = 3
     
+    // Variables used ot regulate the game timer
     var gameTimer = Timer()
     var gameTimeCounter = 0.0
+    
+    // Flag to tell us when it's time to end the countdown before the start of the game
+    var timeToStartGame = false
 
 
     override func viewDidLoad() {
@@ -45,7 +51,7 @@ class GameBoardViewController: UIViewController {
         timerLabel.text = "0.0"
         
         countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 375)
-        countdownLabel.text = "3"
+        countdownLabel.alpha = 0.0
         
         counterLabel.font = UIFont (name: "Courier-Bold", size: 13)
         
@@ -78,34 +84,47 @@ class GameBoardViewController: UIViewController {
     
     func startGame() {
         
-        // Decrement countdown timer
-        countdownTimeCounter -= 1
-
-        // Loop through one last time so we can display "GO!" for one second
-        if countdownTimeCounter <= 0 {
-
-            // Begin Game
-            countdownLabel.text = "GO!"
-            countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 175)
-
-            if countdownTimeCounter <= -1 {
+        // End countdown and start game
+        if countdownTimeCounter == -1 {
             
-                // Turn off countdown timer
-                countdownTimer.invalidate()
+            //Turn off countdown timer
+            countdownTimer.invalidate()
             
-                // Begin game timer
-                gameTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
+            // Begin game timer
+            gameTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
             
-                // Exit function
-                return
-            }
-     
-            // Exit function so we don't display zero
+            // Exit function
             return
         }
         
-        countdownLabel.text = String(countdownTimeCounter)
+        // Display "GO!" for the last second
+        if timeToStartGame == true {
+            countdownLabel.text = "GO!"
+            countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 175)
+            
+            // Display then fade out countdown label
+            countdownLabel.alpha = 0.7
+            countdownLabel.fadeOutView(duration: 1.0)
 
+            // Decrement countdown timer
+            countdownTimeCounter -= 1
+            
+            // Exit function
+            return
+        }
+        
+        // Set, display, and fade out countdown label
+        countdownLabel.text = String(countdownTimeCounter)
+        countdownLabel.alpha = 0.7
+        countdownLabel.fadeOutView(duration: 1.0)
+        
+        // Decrement countdown timer
+        countdownTimeCounter -= 1
+
+        // Set flag to end the countdown
+        if countdownTimeCounter == 0 {
+            timeToStartGame = true
+        }
     }
     
     // Increments the timer
@@ -156,7 +175,7 @@ class GameBoardViewController: UIViewController {
                 counterLabel.text = "10/10"
             case "10/10":
                 break
-                // Display the score card with your time and your best time for the current difficulty
+                // Display the score card with your time and your best times for the current difficulty
             default:
                 break
             }

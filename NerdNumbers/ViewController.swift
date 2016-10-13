@@ -19,8 +19,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Format the labels
+    
         difficultyLabel.font = UIFont (name: "ArialRoundedMTBold", size: 28)
-      
+        difficultyLabel.alpha = 0
+        
         titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
         
         // Format the buttons
@@ -31,7 +33,10 @@ class ViewController: UIViewController {
             button.layer.shadowOpacity = 1.0
             button.layer.shadowRadius = 0
             button.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+            //button.alpha = 0
         }
+        
+        beginApplication()
     }
 
     override func didReceiveMemoryWarning() {
@@ -39,5 +44,14 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func beginApplication () {
+
+        // Display contents with animations
+        difficultyLabel.fadeInView()
+        
+//        for button in myButtons {
+//            button.fadeInView()
+//        }
+    }
 }
 
