@@ -230,6 +230,9 @@ class GameBoardViewController: UIViewController {
                 break
             }
             
+            // Set all binary digit buttons to zero
+            setBinaryDigitsToZero()
+            
             // Display next value
             displayNextValue()
         }
@@ -238,12 +241,17 @@ class GameBoardViewController: UIViewController {
         else {
 
             // Set all binary digits to "0"
-            for button in myBinaryDigitButtons {
-                button.setTitle("0", for: UIControlState.normal)
-            }
+            setBinaryDigitsToZero()
             
             // TODO: display message for incorrect answers
             print("Incorrect")
+        }
+    }
+    
+    func setBinaryDigitsToZero() {
+        // Loops through all binary digit buttons and sets them to zero
+        for button in myBinaryDigitButtons {
+            button.setTitle("0", for: UIControlState.normal)
         }
     }
     
