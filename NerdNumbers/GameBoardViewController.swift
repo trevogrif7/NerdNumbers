@@ -197,7 +197,7 @@ class GameBoardViewController: UIViewController {
         gameTimeCounter += 0.1
         
         // Put a cap on timeCounter so that it doesn't count forever
-        if gameTimeCounter > 5000.0 {
+        if gameTimeCounter > 9999.9 {
             gameTimeCounter = 0.0
             
             timerLabel.text = "TIME'S UP!"
@@ -325,8 +325,8 @@ class GameBoardViewController: UIViewController {
         countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 110)
         countdownLabel.textColor = UIColor(red: 51/255, green: 204/255, blue: 102/255, alpha: 1.0)
         countdownLabel.text = "You Win!!"
-        countdownLabel.alpha = 1.0
-        countdownLabel.fadeOutView(duration: 2.0)
+        countdownLabel.alpha = 0.0
+        countdownLabel.fadeInView(duration: 0.5)
 
         // Delay before transitioning to score viewcontroller
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
