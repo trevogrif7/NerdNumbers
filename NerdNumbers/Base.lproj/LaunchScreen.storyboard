@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="512x512_iTunesArtwork" translatesAutoresizingMaskIntoConstraints="NO" id="8rx-WP-LGh">
-                                <frame key="frameInset" minX="77" minY="126" width="233" height="332"/>
+                                <frame key="frameInset" minX="71" minY="126" width="233" height="332"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>

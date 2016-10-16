@@ -14,12 +14,11 @@ class ViewController: UIViewController {
     @IBOutlet var myButtons: [UIButton]!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Format the labels
-    
         difficultyLabel.font = UIFont (name: "ArialRoundedMTBold", size: 28)
         difficultyLabel.alpha = 0
         
@@ -52,6 +51,22 @@ class ViewController: UIViewController {
 //        for button in myButtons {
 //            button.fadeInView()
 //        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier! {
+        case "easySegue":
+            let gameBoardVC = segue.destination as! GameBoardViewController
+            gameBoardVC.segueID = "easy"
+        case "mediumSegue":
+            let gameBoardVC = segue.destination as! GameBoardViewController
+            gameBoardVC.segueID = "medium"
+        case "hardSegue":
+            let gameBoardVC = segue.destination as! GameBoardViewController
+            gameBoardVC.segueID = "hard"
+        default: break
+            
+        }
     }
 }
 

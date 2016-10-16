@@ -15,10 +15,12 @@ class GameBoardViewController: UIViewController {
     @IBOutlet weak var enterButton: UIButton!
     @IBOutlet weak var whatIsTheBinaryValueLabel: UILabel!
     @IBOutlet weak var decimalLabel: UILabel!
+    @IBOutlet weak var decimalRightWrongLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var counterLabel: UILabel!
     @IBOutlet weak var countdownLabel: UILabel!
+    @IBOutlet weak var incorrectAnswerHintLabel: UILabel!
 
     //// Define variables ////
     
@@ -42,16 +44,26 @@ class GameBoardViewController: UIViewController {
     // Holds given answer in decimal format
     var decimalValue : Int = 0
 
+    // Identify which difficulty button was used to transition to this viewcontroller
+    var segueID : String = ""
+
+    // Random decimal integer to be converted
+    var randomDecimalNumber = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Format the labels
         decimalLabel.font = UIFont (name: "ArialMT", size: 80)
         decimalLabel.text = ""
-
         decimalLabel.layer.borderColor = UIColor.darkGray.cgColor
         decimalLabel.layer.borderWidth = 2.0
-       
+
+        decimalRightWrongLabel.font = UIFont (name: "ArialMT", size: 80)
+        decimalRightWrongLabel.text = ""
+        decimalRightWrongLabel.layer.borderWidth = 2.0
+        decimalRightWrongLabel.alpha = 0.0
+        
         whatIsTheBinaryValueLabel.font = UIFont (name: "ArialRoundedMTBold", size: 25)
         
         titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
@@ -64,6 +76,9 @@ class GameBoardViewController: UIViewController {
         
         counterLabel.font = UIFont (name: "Courier-Bold", size: 13)
         
+        incorrectAnswerHintLabel.font = UIFont (name: "Arial-BoldMT", size: 20)
+        incorrectAnswerHintLabel.alpha = 0.0
+
         // Format the buttons
         for button in myBinaryDigitButtons {
             //button.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 30)
@@ -148,26 +163,35 @@ class GameBoardViewController: UIViewController {
         }
     }
     
-    // TODO: figure out which segue got us to this viewcontroller and set difficulty based on that
+    // Figure out which segue got us to this viewcontroller and set difficulty based on that
     func displayNextValue() {
-        let easyRandomNumber = Int(arc4random_uniform(255) + 1)
-        decimalLabel.text = String(easyRandomNumber)
-        
-        // Medium mode
-        //let mediumRandomNumber = Int(arc4random_uniform(4095) + 1)
-        //decimalLabel.text = String(easyRandomNumber)
-        
-        // Hard mode
-        //let hardRandomNumber = Int(arc4random_uniform(65535) + 1)
-        //decimalLabel.text = String(easyRandomNumber)
+        switch segueID {
+        case "easy":
+            randomDecimalNumber = Int(arc4random_uniform(255) + 1)
+            decimalLabel.text = String(randomDecimalNumber)
+            decimalRightWrongLabel.text = decimalLabel.text
 
+        case "medium":
+            randomDecimalNumber = Int(arc4random_uniform(4095) + 1)
+            decimalLabel.text = String(randomDecimalNumber)
+            decimalRightWrongLabel.text = decimalLabel.text
+
+    
+        case "hard":
+            randomDecimalNumber = Int(arc4random_uniform(65535) + 1)
+            decimalLabel.text = String(randomDecimalNumber)
+            decimalRightWrongLabel.text = decimalLabel.text
+
+        default:
+            break
+        }
     }
     
     // Increments the timer
     func incrementTimer () {
         
         // Stop displaying count down label
-        countdownLabel.isHidden = true
+        //countdownLabel.isHidden = true
         
         // Increment the time counter variable
         gameTimeCounter += 0.1
@@ -186,7 +210,6 @@ class GameBoardViewController: UIViewController {
 
     @IBAction func enterButtonPressed(_ sender: UIButton) {
         
-        
         // Fill an array, in order (based on the tags set in the Attributes Inspector), with the binary digits
         for button in myBinaryDigitButtons {
             binaryDigitArray[button.tag] = button.titleLabel!.text!
@@ -201,12 +224,13 @@ class GameBoardViewController: UIViewController {
         // Convert binary number to decimal number for comparison
         decimalValue = Int(binaryValue, radix: 2)!
         
-        // If binary value matches decimal value go to next number
+        // Correct, binary value matches decimal value, go to next number
         if decimalLabel.text == String(decimalValue) {
             switch counterLabel.text! {
             case "1/10":
-                counterLabel.text = "2/10"
-                print("correct")         // TODO: display message for correct answers
+                endGame()
+                return
+                //counterLabel.text = "2/10"
             case "2/10":
                 counterLabel.text = "3/10"
             case "3/10":
@@ -224,8 +248,8 @@ class GameBoardViewController: UIViewController {
             case "9/10":
                 counterLabel.text = "10/10"
             case "10/10":
-                break
-                // TODO: Display the score card with your time and your best times for the current difficulty
+                endGame()
+                return
             default:
                 break
             }
@@ -233,18 +257,44 @@ class GameBoardViewController: UIViewController {
             // Set all binary digit buttons to zero
             setBinaryDigitsToZero()
             
+            // Flash a green background for a correct answer
+            decimalRightWrongLabel.alpha = 1.0
+            decimalRightWrongLabel.backgroundColor = UIColor(red: 51/255, green: 204/255, blue: 102/255, alpha: 1.0)
+            decimalRightWrongLabel.fadeOutView()
+
             // Display next value
             displayNextValue()
+            
         }
         
-        // Binary value does not match decimal value, try again
+        // Incorrect, binary value does not match decimal value, try again
         else {
 
             // Set all binary digits to "0"
             setBinaryDigitsToZero()
             
-            // TODO: display message for incorrect answers
-            print("Incorrect")
+            // Flash a red background for an incorrect answer
+            decimalRightWrongLabel.alpha = 1.0
+            decimalRightWrongLabel.backgroundColor = UIColor(red: 255/255, green: 51/255, blue: 51/255, alpha: 1.0)
+            decimalRightWrongLabel.fadeOutView()
+            
+            // Get offsets in order to display binary value in groupings of four
+            let stringIndex1 = binaryValue.index(binaryValue.startIndex, offsetBy: 3)
+            let stringIndex2 = binaryValue.index(binaryValue.startIndex, offsetBy: 4)
+            let stringIndex3 = binaryValue.index(binaryValue.startIndex, offsetBy: 7)
+            let stringIndex4 = binaryValue.index(binaryValue.startIndex, offsetBy: 8)
+            let stringIndex5 = binaryValue.index(binaryValue.startIndex, offsetBy: 11)
+            let stringIndex6 = binaryValue.index(binaryValue.startIndex, offsetBy: 12)
+            let stringIndex7 = binaryValue.index(binaryValue.startIndex, offsetBy: 15)
+
+            incorrectAnswerHintLabel.text = binaryValue[binaryValue.startIndex...stringIndex1] + " " +
+                binaryValue[stringIndex2...stringIndex3] + " " +
+                binaryValue[stringIndex4...stringIndex5] + " " +
+                binaryValue[stringIndex6...stringIndex7] + " = " + String(decimalValue)
+
+            // Flash a label which displays the actual decimal value of your incorrect answered
+            incorrectAnswerHintLabel.alpha = 1.0
+            incorrectAnswerHintLabel.fadeOutView(duration: 2.5)
         }
     }
     
@@ -264,9 +314,15 @@ class GameBoardViewController: UIViewController {
         else {
             sender.setTitle("0", for: UIControlState.normal)
         }
-       
     }
     
-
+    func endGame() {
+        countdownLabel.isHidden = false
+        countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 110)
+        countdownLabel.textColor = UIColor(red: 51/255, green: 204/255, blue: 102/255, alpha: 1.0)
+        countdownLabel.text = "You Win!"
+        countdownLabel.alpha = 1.0
+        //performSegue(withIdentifier: "endGameSegue", sender: self)
+    }
     
 }

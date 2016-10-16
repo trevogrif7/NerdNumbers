@@ -24,4 +24,12 @@ extension UIView {
             self.alpha = 0
         })
     }
+    
+    // Make UIView item's color fade in
+    func fadeInColor(duration: TimeInterval = 1.0, color: CGColor = UIColor.white.cgColor) {
+        UIView.animate(withDuration: duration, animations: {
+            self.layer.backgroundColor = color
+        })
+    }
+
 }
