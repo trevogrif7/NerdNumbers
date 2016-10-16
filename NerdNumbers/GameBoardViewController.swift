@@ -45,7 +45,7 @@ class GameBoardViewController: UIViewController {
     var decimalValue : Int = 0
 
     // Identify which difficulty button was used to transition to this viewcontroller
-    var segueID : String = ""
+    var difficultySegueID : String = ""
 
     // Random decimal integer to be converted
     var randomDecimalNumber = 0
@@ -98,7 +98,7 @@ class GameBoardViewController: UIViewController {
         enterButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         enterButton.isEnabled = false
         
-        // Begin timer
+        // Begin countdown timer
         countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameBoardViewController.startGame), userInfo: nil, repeats: true)
 
     }
@@ -165,7 +165,7 @@ class GameBoardViewController: UIViewController {
     
     // Figure out which segue got us to this viewcontroller and set difficulty based on that
     func displayNextValue() {
-        switch segueID {
+        switch difficultySegueID {
         case "easy":
             randomDecimalNumber = Int(arc4random_uniform(255) + 1)
             decimalLabel.text = String(randomDecimalNumber)
@@ -197,7 +197,7 @@ class GameBoardViewController: UIViewController {
         gameTimeCounter += 0.1
         
         // Put a cap on timeCounter so that it doesn't count forever
-        if gameTimeCounter > 200.0 {
+        if gameTimeCounter > 5000.0 {
             gameTimeCounter = 0.0
             
             timerLabel.text = "TIME'S UP!"
@@ -317,12 +317,28 @@ class GameBoardViewController: UIViewController {
     }
     
     func endGame() {
+        // Stop timer
+        gameTimer.invalidate()
+        
+        // Display winner label
         countdownLabel.isHidden = false
         countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 110)
         countdownLabel.textColor = UIColor(red: 51/255, green: 204/255, blue: 102/255, alpha: 1.0)
-        countdownLabel.text = "You Win!"
+        countdownLabel.text = "You Win!!"
         countdownLabel.alpha = 1.0
-        //performSegue(withIdentifier: "endGameSegue", sender: self)
+        countdownLabel.fadeOutView(duration: 2.0)
+
+        // Delay before transitioning to score viewcontroller
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+            self.performSegue(withIdentifier: "endGameSegue", sender: self)
+        })
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let  scoresVC = segue.destination as! ScoresViewController
+        scoresVC.timeScored = Double(timerLabel.text!)!
+        scoresVC.currentDifficulty = difficultySegueID
+    }
+
     
 }

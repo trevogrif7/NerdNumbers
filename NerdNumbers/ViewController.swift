@@ -57,13 +57,13 @@ class ViewController: UIViewController {
         switch segue.identifier! {
         case "easySegue":
             let gameBoardVC = segue.destination as! GameBoardViewController
-            gameBoardVC.segueID = "easy"
+            gameBoardVC.difficultySegueID = "easy"
         case "mediumSegue":
             let gameBoardVC = segue.destination as! GameBoardViewController
-            gameBoardVC.segueID = "medium"
+            gameBoardVC.difficultySegueID = "medium"
         case "hardSegue":
             let gameBoardVC = segue.destination as! GameBoardViewController
-            gameBoardVC.segueID = "hard"
+            gameBoardVC.difficultySegueID = "hard"
         default: break
             
         }
