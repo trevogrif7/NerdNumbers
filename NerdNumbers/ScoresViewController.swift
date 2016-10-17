@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScoresViewController: UIViewController {
+class ScoresViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet weak var easyTimeLabel: UILabel!
     @IBOutlet weak var mediumTimeLabel: UILabel!
@@ -159,10 +159,36 @@ class ScoresViewController: UIViewController {
                 defaults.set(hardBestTime, forKey: HARD_DIFFICULTY_KEY)
             }
         default:
-            print("ERROR: There was no difficulty set, this should never happen")
             break
         }
-        
- 
+    }
+    
+    @IBAction func menuButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "menuSegue", sender: self)
+    }
+
+
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier! {
+        case "menuSegue":
+            
+            // Present popover menu
+            segue.destination.popoverPresentationController?.sourceRect = CGRect(x: 6.0, y: -10.0, width: 10, height: 0)
+            let popoverVC = segue.destination as! MenuViewController
+            
+            // Change the size of the popover view
+            popoverVC.preferredContentSize = CGSize(width: 100, height: 100)
+            
+            let popoverController = popoverVC.popoverPresentationController
+            popoverController?.delegate = self
+            popoverController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            popoverVC.segueID = "scoresPage"
+        default: break
+            
+        }
     }
 }

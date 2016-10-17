@@ -9,7 +9,7 @@
 import UIKit
 import QuartzCore
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet var myButtons: [UIButton]!
     @IBOutlet weak var difficultyLabel: UILabel!
@@ -64,9 +64,30 @@ class ViewController: UIViewController {
         case "hardSegue":
             let gameBoardVC = segue.destination as! GameBoardViewController
             gameBoardVC.difficultySegueID = "hard"
+        case "menuSegue":
+
+            // Present popover menu
+            segue.destination.popoverPresentationController?.sourceRect = CGRect(x: 6.0, y: -10.0, width: 10, height: 0)
+            let popoverVC = segue.destination as! MenuViewController
+
+            // Change the size of the popover view
+            popoverVC.preferredContentSize = CGSize(width: 100, height: 70)
+
+            let popoverController = popoverVC.popoverPresentationController
+            popoverController?.delegate = self
+            popoverController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            popoverVC.segueID = "difficultyPage"
         default: break
             
         }
+    }
+    
+    @IBAction func menuButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "menuSegue", sender: self)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
 }
 

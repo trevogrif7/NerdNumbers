@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GameBoardViewController: UIViewController {
+class GameBoardViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
     // Define IB Outlets
     @IBOutlet var myBinaryDigitButtons: [UIButton]!
@@ -181,7 +181,6 @@ class GameBoardViewController: UIViewController {
             randomDecimalNumber = Int(arc4random_uniform(65535) + 1)
             decimalLabel.text = String(randomDecimalNumber)
             decimalRightWrongLabel.text = decimalLabel.text
-
         default:
             break
         }
@@ -335,10 +334,35 @@ class GameBoardViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let  scoresVC = segue.destination as! ScoresViewController
-        scoresVC.timeScored = Double(timerLabel.text!)!
-        scoresVC.currentDifficulty = difficultySegueID
+        switch segue.identifier! {
+        case "endGameSegue":
+            let  scoresVC = segue.destination as! ScoresViewController
+            scoresVC.timeScored = Double(timerLabel.text!)!
+            scoresVC.currentDifficulty = difficultySegueID
+            
+        case "menuSegue":
+            // Present popover menu
+            segue.destination.popoverPresentationController?.sourceRect = CGRect(x: 6.0, y: -10.0, width: 10, height: 0)
+            let popoverVC = segue.destination as! MenuViewController
+            
+            // Change the size of the popover view
+            popoverVC.preferredContentSize = CGSize(width: 100, height: 100)
+            
+            let popoverController = popoverVC.popoverPresentationController
+            popoverController?.delegate = self 
+            popoverController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+            popoverVC.segueID = "gameBoardPage"
+
+        default:
+            break
+        }
     }
 
+    @IBAction func menuButtonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: "menuSegue", sender: self)
+    }
     
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
 }
