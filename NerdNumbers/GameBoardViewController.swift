@@ -50,6 +50,12 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     // Random decimal integer to be converted
     var randomDecimalNumber = 0
     
+    // Temporarily hold decimal value when menu is selected
+    var tempDecimalValue = ""
+    var countdownTimerWasPaused = false
+    var gameTimerWasPaused = false
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -359,7 +365,35 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     }
 
     @IBAction func menuButtonPressed(_ sender: UIButton) {
+        if countdownTimer.isValid {
+            countdownTimer.invalidate()
+            countdownTimerWasPaused = true
+        }
+        else if gameTimer.isValid {
+            gameTimer.invalidate()
+            gameTimerWasPaused = true
+        }
+        
+        tempDecimalValue = decimalLabel.text!
+        decimalLabel.text = ""
+        
         performSegue(withIdentifier: "menuSegue", sender: self)
+        
+    }
+    
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+       
+        decimalLabel.text = tempDecimalValue
+       
+        if countdownTimerWasPaused {
+            countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameBoardViewController.startGame), userInfo: nil, repeats: true)
+            countdownTimerWasPaused = false
+        }
+        
+        if gameTimerWasPaused {
+            gameTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
+            gameTimerWasPaused = false
+        }
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {

@@ -18,6 +18,11 @@ class MenuViewController: UIViewController {
     // Identifies which viewcontroller initiated the segue
     var segueID : String = ""
     
+    // Keys for data stored with NSUserdefaults
+    let EASY_DIFFICULTY_KEY = "easyDifficultyBestTime"
+    let MEDIUM_DIFFICULTY_KEY = "mediumDifficultyBestTime"
+    let HARD_DIFFICULTY_KEY = "hardDifficultyBestTime"
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -91,7 +96,15 @@ class MenuViewController: UIViewController {
             performSegue(withIdentifier: "difficultySegue", sender: self)
         case "scoresPage":
             // Clear top score history
-            break
+            let defaults = UserDefaults.standard
+            defaults.removeObject(forKey: EASY_DIFFICULTY_KEY)
+            defaults.removeObject(forKey: MEDIUM_DIFFICULTY_KEY)
+            defaults.removeObject(forKey: HARD_DIFFICULTY_KEY)
+            
+            // Reload scores view controller
+            performSegue(withIdentifier: "scoresSegue", sender: self)
+
+
         default:
             break
         }
