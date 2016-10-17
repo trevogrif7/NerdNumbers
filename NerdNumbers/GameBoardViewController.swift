@@ -202,11 +202,13 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         gameTimeCounter += 0.1
         
         // Put a cap on timeCounter so that it doesn't count forever
-        if gameTimeCounter > 9999.9 {
-            gameTimeCounter = 0.0
+        if gameTimeCounter >= 9999.9 {
             
-            timerLabel.text = "TIME'S UP!"
             gameTimer.invalidate()
+            
+            // Transition to the score page if the player reaches 9999.9 seconds
+            self.performSegue(withIdentifier: "endGameSegue", sender: self)
+            
             return
         }
         
@@ -233,9 +235,7 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         if decimalLabel.text == String(decimalValue) {
             switch counterLabel.text! {
             case "1/10":
-                endGame()
-                return
-                //counterLabel.text = "2/10"
+                counterLabel.text = "2/10"
             case "2/10":
                 counterLabel.text = "3/10"
             case "3/10":
