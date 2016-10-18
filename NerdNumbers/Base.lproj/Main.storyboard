@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="RsC-OI-bGI">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -94,16 +94,12 @@
                                     <action selector="menuButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wqk-nM-Dnc"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yic-xu-NZs">
-                                <frame key="frameInset" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.23605476219999999" green="0.83421240480000003" blue="0.4296016835" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="azw-8t-29S"/>
                     <connections>
                         <outlet property="difficultyLabel" destination="LVz-M8-9cf" id="nGr-ro-YUF"/>
-                        <outlet property="introImageView" destination="Yic-xu-NZs" id="Zgf-kI-hho"/>
                         <outlet property="titleLabel" destination="KiS-8A-TGA" id="yRM-D4-alt"/>
                         <outletCollection property="myButtons" destination="8X3-4O-VCa" collectionClass="NSMutableArray" id="Q06-LI-loQ"/>
                         <outletCollection property="myButtons" destination="jHf-M3-xh9" collectionClass="NSMutableArray" id="ZVz-TI-isH"/>
@@ -116,7 +112,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="184.80000000000001" y="135.38230884557723"/>
+            <point key="canvasLocation" x="1124" y="135.38230884557723"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="3KL-t3-5jc">
@@ -172,7 +168,7 @@
                         <outlet property="menuButton1" destination="PAg-IP-UVq" id="BTR-bf-iX1"/>
                         <outlet property="menuButton2" destination="qIY-wr-K0W" id="g0P-C4-eAY"/>
                         <outlet property="menuTitleLabel" destination="9Ac-Qb-sCx" id="0ca-7G-srn"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="difficultySegue" id="xQw-8L-hUy"/>
+                        <segue destination="RsC-OI-bGI" kind="show" identifier="difficultySegue" id="xQw-8L-hUy"/>
                         <segue destination="cWj-r3-94R" kind="show" identifier="scoresSegue" id="xzg-C4-cHS"/>
                     </connections>
                 </viewController>
@@ -486,7 +482,7 @@
                         <outletCollection property="myBinaryDigitButtons" destination="wYI-VJ-Smo" collectionClass="NSMutableArray" id="KhL-ts-PLf"/>
                         <outletCollection property="myBinaryDigitButtons" destination="hog-Xi-J66" collectionClass="NSMutableArray" id="7ss-HM-o44"/>
                         <segue destination="cWj-r3-94R" kind="show" identifier="endGameSegue" id="GGt-4W-5qt"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="newGameSegue" id="xNA-ej-xDL"/>
+                        <segue destination="RsC-OI-bGI" kind="show" identifier="newGameSegue" id="xNA-ej-xDL"/>
                         <segue destination="K4i-nI-VAL" kind="popoverPresentation" identifier="menuSegue" popoverAnchorView="XqB-VL-9J4" id="BMf-tv-AWP">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
@@ -494,7 +490,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xhg-0L-BEg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="997.60000000000002" y="136.28185907046478"/>
+            <point key="canvasLocation" x="1936.8" y="136.28185907046478"/>
         </scene>
         <!--Scores View Controller-->
         <scene sceneID="ZDL-Yi-AHj">
@@ -623,7 +619,25 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1792.8" y="136.28185907046478"/>
+            <point key="canvasLocation" x="2732" y="136.28185907046478"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="R9A-if-2RG">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RsC-OI-bGI" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EbC-2p-nVV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="yZg-p3-m5b"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7XF-GU-giQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="184.80000000000001" y="135.38230884557723"/>
         </scene>
     </scenes>
     <resources>
@@ -631,9 +645,9 @@
         <image name="MenuIconWhite" width="226" height="148"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xQw-8L-hUy"/>
-        <segue reference="7KR-v9-Ej4"/>
+        <segue reference="xNA-ej-xDL"/>
         <segue reference="efs-Hu-uGu"/>
+        <segue reference="7KR-v9-Ej4"/>
         <segue reference="QLL-Xy-uk2"/>
     </inferredMetricsTieBreakers>
 </document>
