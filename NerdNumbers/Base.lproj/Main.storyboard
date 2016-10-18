@@ -94,11 +94,16 @@
                                     <action selector="menuButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wqk-nM-Dnc"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yic-xu-NZs">
+                                <frame key="frameInset" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.23605476219999999" green="0.83421240480000003" blue="0.4296016835" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
                         <outlet property="difficultyLabel" destination="LVz-M8-9cf" id="nGr-ro-YUF"/>
+                        <outlet property="introImageView" destination="Yic-xu-NZs" id="Zgf-kI-hho"/>
                         <outlet property="titleLabel" destination="KiS-8A-TGA" id="yRM-D4-alt"/>
                         <outletCollection property="myButtons" destination="8X3-4O-VCa" collectionClass="NSMutableArray" id="Q06-LI-loQ"/>
                         <outletCollection property="myButtons" destination="jHf-M3-xh9" collectionClass="NSMutableArray" id="ZVz-TI-isH"/>
@@ -111,7 +116,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="185" y="136"/>
+            <point key="canvasLocation" x="184.80000000000001" y="135.38230884557723"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="3KL-t3-5jc">
@@ -626,9 +631,9 @@
         <image name="MenuIconWhite" width="226" height="148"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="efs-Hu-uGu"/>
         <segue reference="xQw-8L-hUy"/>
         <segue reference="7KR-v9-Ej4"/>
-        <segue reference="xzg-C4-cHS"/>
+        <segue reference="efs-Hu-uGu"/>
+        <segue reference="QLL-Xy-uk2"/>
     </inferredMetricsTieBreakers>
 </document>
