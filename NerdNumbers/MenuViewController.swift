@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol MyMenuDelegate{
+    func button2Pressed()
+}
+
+
 class MenuViewController: UIViewController {
 
     @IBOutlet weak var menuTitleLabel: UILabel!
@@ -17,6 +22,8 @@ class MenuViewController: UIViewController {
 
     // Identifies which viewcontroller initiated the segue
     var segueID : String = ""
+
+    var delegate : MyMenuDelegate?
     
     // Keys for data stored with NSUserdefaults
     let EASY_DIFFICULTY_KEY = "easyDifficultyBestTime"
@@ -27,17 +34,17 @@ class MenuViewController: UIViewController {
         super.viewDidLoad()
 
         // Format labels and buttons
-        menuTitleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 15)
+        menuTitleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 18)
         menuTitleLabel.text = "OPTIONS"
         
         dividerLabel.layer.borderColor = UIColor.white.cgColor
         dividerLabel.layer.borderWidth = 2.0
         
-        menuButton1.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 15)
+        menuButton1.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 18)
         menuButton1.setTitle("Best Times", for: UIControlState.normal)
 
         menuButton2.titleLabel?.font = UIFont (name:
-            "ArialRoundedMTBold", size: 15)
+            "ArialRoundedMTBold", size: 18)
         menuButton2.setTitle("New Game", for: UIControlState.normal)
  
         // Format menu based on what viewcontroller initiated the segue
@@ -101,10 +108,16 @@ class MenuViewController: UIViewController {
             defaults.removeObject(forKey: MEDIUM_DIFFICULTY_KEY)
             defaults.removeObject(forKey: HARD_DIFFICULTY_KEY)
             
+            if self.delegate != nil {
+                self.delegate?.button2Pressed()
+                // Dismiss the popover
+                dismiss(animated: true, completion: nil)
+            }
+
+            
             // Reload scores view controller
-            performSegue(withIdentifier: "scoresSegue", sender: self)
-
-
+            //performSegue(withIdentifier: "scoresSegue", sender: self)
+ 
         default:
             break
         }

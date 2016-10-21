@@ -14,7 +14,6 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     @IBOutlet var myButtons: [UIButton]!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var introImageView: UIImageView!
     
     // Variable for setting up opening annimation
     var introMask : CALayer? = CALayer()
@@ -119,7 +118,7 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
             let popoverVC = segue.destination as! MenuViewController
 
             // Change the size of the popover view
-            popoverVC.preferredContentSize = CGSize(width: 100, height: 70)
+            popoverVC.preferredContentSize = CGSize(width: 120, height: 70)
 
             let popoverController = popoverVC.popoverPresentationController
             popoverController?.delegate = self

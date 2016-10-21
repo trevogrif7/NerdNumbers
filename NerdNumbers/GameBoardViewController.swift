@@ -352,7 +352,7 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
             let popoverVC = segue.destination as! MenuViewController
             
             // Change the size of the popover view
-            popoverVC.preferredContentSize = CGSize(width: 100, height: 100)
+            popoverVC.preferredContentSize = CGSize(width: 120, height: 100)
             
             let popoverController = popoverVC.popoverPresentationController
             popoverController?.delegate = self 

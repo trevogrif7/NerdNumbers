@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScoresViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class ScoresViewController: UIViewController, UIPopoverPresentationControllerDelegate, MyMenuDelegate {
 
     @IBOutlet weak var easyTimeLabel: UILabel!
     @IBOutlet weak var mediumTimeLabel: UILabel!
@@ -19,6 +19,7 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var currentTimeScoredLabel: UILabel!
     @IBOutlet weak var nNLogoImageView: UIImageView!
+    @IBOutlet weak var newGameButton: UIButton!
    
     //// Define variables ////
     
@@ -46,7 +47,7 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Format Labels
         easyTimeLabel.font = UIFont (name: "ArialMT", size: 20)
         mediumTimeLabel.font = UIFont (name: "ArialMT", size: 20)
@@ -63,6 +64,15 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
         currentTimeScoredLabel.font = UIFont (name: "Arial-BoldMT", size: 35)
         currentTimeScoredLabel.text = "0.0 seconds"
        
+        // Format button
+        newGameButton.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 19)
+        newGameButton.layer.shadowColor = UIColor.darkGray.cgColor
+        newGameButton.layer.masksToBounds = false
+        newGameButton.layer.shadowOpacity = 1.0
+        newGameButton.layer.shadowRadius = 0
+        newGameButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+
+        
         // Use NSUserDefaults to retrieve top times for each difficulty
         let defaults = UserDefaults.standard
         easyBestTime = defaults.string(forKey: EASY_DIFFICULTY_KEY)
@@ -70,6 +80,7 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
             bestEasyTimeLabel.text = easyBestTime! + " seconds"
         }
         else {
+            // Populate with the worst possible score so that we can compare later to input better times
             easyBestTime = "9999.9"
         }
 
@@ -78,16 +89,20 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
             bestMediumTimeLabel.text = mediumBestTime! + " seconds"
         }
         else {
+            // Populate with the worst possible score so that we can compare later to input better times
             mediumBestTime = "9999.9"
         }
+
 
         hardBestTime = defaults.string(forKey: HARD_DIFFICULTY_KEY)
         if (hardBestTime != nil) {
             bestHardTimeLabel.text = hardBestTime! + " seconds"
         }
         else {
+            // Populate with the worst possible score so that we can compare later to input better times
             hardBestTime = "9999.9"
         }
+
 
         // Begin timer
         scoreTimer = Timer.scheduledTimer(timeInterval: 1/300, target: self, selector: #selector(ScoresViewController.showScore), userInfo: nil, repeats: true)
@@ -180,15 +195,90 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
             segue.destination.popoverPresentationController?.sourceRect = CGRect(x: 6.0, y: -10.0, width: 10, height: 0)
             let popoverVC = segue.destination as! MenuViewController
             
+            popoverVC.delegate = self
+            
             // Change the size of the popover view
-            popoverVC.preferredContentSize = CGSize(width: 100, height: 100)
+            popoverVC.preferredContentSize = CGSize(width: 120, height: 100)
             
             let popoverController = popoverVC.popoverPresentationController
             popoverController?.delegate = self
             popoverController?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
             popoverVC.segueID = "scoresPage"
+        case "newGame":
+            // Nothing to do here
+            break
+        
         default: break
             
         }
     }
+    
+//    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+//        
+//        // Try to re-populate the saved values just incase they were cleared
+//        
+//        // Use NSUserDefaults to retrieve top times for each difficulty
+//        let defaults = UserDefaults.standard
+//        easyBestTime = defaults.string(forKey: EASY_DIFFICULTY_KEY)
+//        if (easyBestTime != nil) {
+//            bestEasyTimeLabel.text = easyBestTime! + " seconds"
+//        }
+//        else {
+//            bestEasyTimeLabel.text = "N/A seconds"
+//        }
+//        
+//        mediumBestTime = defaults.string(forKey: MEDIUM_DIFFICULTY_KEY)
+//        if (mediumBestTime != nil) {
+//            bestMediumTimeLabel.text = mediumBestTime! + " seconds"
+//        }
+//        else {
+//            bestMediumTimeLabel.text = "N/A seconds"
+// 
+//        }
+//        
+//        hardBestTime = defaults.string(forKey: HARD_DIFFICULTY_KEY)
+//        if (hardBestTime != nil) {
+//            bestHardTimeLabel.text = hardBestTime! + " seconds"
+//        }
+//        else {
+//            bestHardTimeLabel.text = "N/A seconds"
+//
+//        }
+//
+//    }
+//    
+    // Called when the second button is pressed (it will be "Clear Scores" in this case
+    func button2Pressed() {
+        // Try to re-populate the saved values just incase they were cleard
+        
+        // Use NSUserDefaults to retrieve top times for each difficulty
+        let defaults = UserDefaults.standard
+        easyBestTime = defaults.string(forKey: EASY_DIFFICULTY_KEY)
+        if (easyBestTime != nil) {
+            bestEasyTimeLabel.text = easyBestTime! + " seconds"
+        }
+        else {
+            bestEasyTimeLabel.text = "N/A seconds"
+        }
+        
+        mediumBestTime = defaults.string(forKey: MEDIUM_DIFFICULTY_KEY)
+        if (mediumBestTime != nil) {
+            bestMediumTimeLabel.text = mediumBestTime! + " seconds"
+        }
+        else {
+            bestMediumTimeLabel.text = "N/A seconds"
+            
+        }
+        
+        hardBestTime = defaults.string(forKey: HARD_DIFFICULTY_KEY)
+        if (hardBestTime != nil) {
+            bestHardTimeLabel.text = hardBestTime! + " seconds"
+        }
+        else {
+            bestHardTimeLabel.text = "N/A seconds"
+            
+        }
+        
+    }
+
 }
