@@ -25,11 +25,6 @@ class MenuViewController: UIViewController {
 
     var delegate : MyMenuDelegate?
     
-    // Keys for data stored with NSUserdefaults
-    let EASY_DIFFICULTY_KEY = "easyDifficultyBestTime"
-    let MEDIUM_DIFFICULTY_KEY = "mediumDifficultyBestTime"
-    let HARD_DIFFICULTY_KEY = "hardDifficultyBestTime"
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -102,16 +97,11 @@ class MenuViewController: UIViewController {
             // Start a new game
             performSegue(withIdentifier: "difficultySegue", sender: self)
         case "scoresPage":
-            // Clear top score history
-            let defaults = UserDefaults.standard
-            defaults.removeObject(forKey: EASY_DIFFICULTY_KEY)
-            defaults.removeObject(forKey: MEDIUM_DIFFICULTY_KEY)
-            defaults.removeObject(forKey: HARD_DIFFICULTY_KEY)
             
             if self.delegate != nil {
+                dismiss(animated: true, completion: nil)
                 self.delegate?.button2Pressed()
                 // Dismiss the popover
-                dismiss(animated: true, completion: nil)
             }
 
             

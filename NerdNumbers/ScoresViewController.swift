@@ -10,6 +10,7 @@ import UIKit
 
 class ScoresViewController: UIViewController, UIPopoverPresentationControllerDelegate, MyMenuDelegate {
 
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var easyTimeLabel: UILabel!
     @IBOutlet weak var mediumTimeLabel: UILabel!
     @IBOutlet weak var hardTimeLabel: UILabel!
@@ -20,6 +21,7 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var currentTimeScoredLabel: UILabel!
     @IBOutlet weak var nNLogoImageView: UIImageView!
     @IBOutlet weak var newGameButton: UIButton!
+    @IBOutlet weak var newTopTimeLabel: UILabel!
    
     //// Define variables ////
     
@@ -49,16 +51,27 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
         super.viewDidLoad()
         
         // Format Labels
+        titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
+        
+        newTopTimeLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
+        newTopTimeLabel.text = "New Top Time!"
+        newTopTimeLabel.alpha = 0
+        
         easyTimeLabel.font = UIFont (name: "ArialMT", size: 20)
         mediumTimeLabel.font = UIFont (name: "ArialMT", size: 20)
         hardTimeLabel.font = UIFont (name: "ArialMT", size: 20)
 
         bestEasyTimeLabel.font = UIFont (name: "ArialMT", size: 20)
         bestEasyTimeLabel.text = "N/A seconds"
+        bestEasyTimeLabel.textColor = UIColor.black
+        
         bestMediumTimeLabel.font = UIFont (name: "ArialMT", size: 20)
         bestMediumTimeLabel.text = "N/A seconds"
+        bestMediumTimeLabel.textColor = UIColor.black
+        
         bestHardTimeLabel.font = UIFont (name: "ArialMT", size: 20)
         bestHardTimeLabel.text = "N/A seconds"
+        bestHardTimeLabel.textColor = UIColor.black
         
         currentTimeLabel.font = UIFont (name: "Arial-BoldMT", size: 22)
         currentTimeScoredLabel.font = UIFont (name: "Arial-BoldMT", size: 35)
@@ -151,6 +164,10 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
                 easyBestTime = String(timeScored)
                 bestEasyTimeLabel.text = easyBestTime! + " seconds"
                 
+                // Announce that there is a new top score
+                newTopTimeLabel.alpha = 1.0
+                bestEasyTimeLabel.textColor = UIColor.white
+                
                 // Save new best time for easy difficulty
                 let defaults = UserDefaults.standard
                 defaults.set(easyBestTime, forKey: EASY_DIFFICULTY_KEY)
@@ -160,6 +177,10 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
                 mediumBestTime = String(timeScored)
                 bestMediumTimeLabel.text = mediumBestTime! + " seconds"
                 
+                // Announce that there is a new top score
+                newTopTimeLabel.alpha = 1.0
+                bestMediumTimeLabel.textColor = UIColor.white
+                
                 // Save new best time for medium difficulty
                 let defaults = UserDefaults.standard
                 defaults.set(mediumBestTime, forKey: MEDIUM_DIFFICULTY_KEY)
@@ -168,6 +189,10 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
             if timeScored < Double(hardBestTime!)! {
                 hardBestTime = String(timeScored)
                 bestHardTimeLabel.text = hardBestTime! + " seconds"
+                
+                // Announce that there is a new top score
+                newTopTimeLabel.alpha = 1.0
+                bestHardTimeLabel.textColor = UIColor.white
                 
                 // Save new best time for hard difficulty
                 let defaults = UserDefaults.standard
@@ -213,72 +238,57 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
         }
     }
     
-//    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
-//        
-//        // Try to re-populate the saved values just incase they were cleared
-//        
-//        // Use NSUserDefaults to retrieve top times for each difficulty
-//        let defaults = UserDefaults.standard
-//        easyBestTime = defaults.string(forKey: EASY_DIFFICULTY_KEY)
-//        if (easyBestTime != nil) {
-//            bestEasyTimeLabel.text = easyBestTime! + " seconds"
-//        }
-//        else {
-//            bestEasyTimeLabel.text = "N/A seconds"
-//        }
-//        
-//        mediumBestTime = defaults.string(forKey: MEDIUM_DIFFICULTY_KEY)
-//        if (mediumBestTime != nil) {
-//            bestMediumTimeLabel.text = mediumBestTime! + " seconds"
-//        }
-//        else {
-//            bestMediumTimeLabel.text = "N/A seconds"
-// 
-//        }
-//        
-//        hardBestTime = defaults.string(forKey: HARD_DIFFICULTY_KEY)
-//        if (hardBestTime != nil) {
-//            bestHardTimeLabel.text = hardBestTime! + " seconds"
-//        }
-//        else {
-//            bestHardTimeLabel.text = "N/A seconds"
-//
-//        }
-//
-//    }
-//    
-    // Called when the second button is pressed (it will be "Clear Scores" in this case
+    
+    // Called when the second button on popover view is pressed (it will be "Clear Scores" in this case
     func button2Pressed() {
-        // Try to re-populate the saved values just incase they were cleard
-        
-        // Use NSUserDefaults to retrieve top times for each difficulty
-        let defaults = UserDefaults.standard
-        easyBestTime = defaults.string(forKey: EASY_DIFFICULTY_KEY)
-        if (easyBestTime != nil) {
-            bestEasyTimeLabel.text = easyBestTime! + " seconds"
-        }
-        else {
-            bestEasyTimeLabel.text = "N/A seconds"
-        }
-        
-        mediumBestTime = defaults.string(forKey: MEDIUM_DIFFICULTY_KEY)
-        if (mediumBestTime != nil) {
-            bestMediumTimeLabel.text = mediumBestTime! + " seconds"
-        }
-        else {
-            bestMediumTimeLabel.text = "N/A seconds"
-            
-        }
-        
-        hardBestTime = defaults.string(forKey: HARD_DIFFICULTY_KEY)
-        if (hardBestTime != nil) {
-            bestHardTimeLabel.text = hardBestTime! + " seconds"
-        }
-        else {
-            bestHardTimeLabel.text = "N/A seconds"
-            
-        }
-        
-    }
 
+        let defaults = UserDefaults.standard
+
+        // Check that there is top score data
+        if (defaults.string(forKey: EASY_DIFFICULTY_KEY) != nil) ||
+            (defaults.string(forKey: MEDIUM_DIFFICULTY_KEY) != nil) ||
+            (defaults.string(forKey: HARD_DIFFICULTY_KEY) != nil) {
+
+            // Display UIAlertConroller to verify you want to delete the top scores
+            let deleteTimeDataAlert = UIAlertController(title: "Clear Scores", message: "Are you sure you want to clear your top times?", preferredStyle: .alert)
+            
+            // "Clear" button clicked, delete saved top scores from memory and reset labels
+            let clearAlertActionButton = UIAlertAction(title: "Clear", style: .destructive) { (UIAlertAction) in
+                // Clear top score history
+                defaults.removeObject(forKey: self.EASY_DIFFICULTY_KEY)
+                defaults.removeObject(forKey: self.MEDIUM_DIFFICULTY_KEY)
+                defaults.removeObject(forKey: self.HARD_DIFFICULTY_KEY)
+                
+                // Clear the labels of top times and make sure their color is correct
+                self.bestEasyTimeLabel.text = "N/A seconds"
+                self.bestEasyTimeLabel.textColor = UIColor.black
+                self.bestMediumTimeLabel.text = "N/A seconds"
+                self.bestMediumTimeLabel.textColor = UIColor.black
+                self.bestHardTimeLabel.text = "N/A seconds"
+                self.bestHardTimeLabel.textColor = UIColor.black
+                    
+                // Clear new top time label
+                self.newTopTimeLabel.alpha = 0
+            }
+            
+            // "Cancel" button clicked, do nothing
+            let cancelAlertActionButton = UIAlertAction(title: "Cancel", style: .cancel)
+
+            deleteTimeDataAlert.addAction(cancelAlertActionButton)
+            deleteTimeDataAlert.addAction(clearAlertActionButton)
+            
+            self.present(deleteTimeDataAlert, animated: true, completion: nil)
+        }
+        else {
+            // Display UIAlertConroller to notify the user that there is not data to clear
+            let noTimeDataAlert = UIAlertController(title: "No Data Saved", message: "There are no top times saved. Try starting a new game.", preferredStyle: .alert)
+            
+            // "OK" button clicked, do nothing
+            let okAlertActionButton = UIAlertAction(title: "OK", style: .default)
+            
+            noTimeDataAlert.addAction(okAlertActionButton)
+
+            self.present(noTimeDataAlert, animated: true, completion: nil)
+        }
+    }
 }

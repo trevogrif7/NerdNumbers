@@ -788,6 +788,14 @@
                                     <segue destination="BYZ-38-t0r" kind="show" identifier="newGame" id="xj6-VI-Ivs"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Top Time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MWU-JB-mGa">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="CwZ-gS-6z3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.47934520244598389" blue="0.99908632040023804" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -796,11 +804,14 @@
                             <constraint firstItem="3lp-50-nOE" firstAttribute="centerX" secondItem="oNr-j7-cLf" secondAttribute="centerX" id="3Bi-7U-tEI"/>
                             <constraint firstAttribute="leadingMargin" secondItem="n50-mC-u6c" secondAttribute="leading" id="6ea-8M-Vy8"/>
                             <constraint firstItem="2fr-IL-Uht" firstAttribute="top" secondItem="hJc-Ba-FVh" secondAttribute="bottom" constant="-39" id="FiE-dY-vz0"/>
+                            <constraint firstItem="MWU-JB-mGa" firstAttribute="leading" secondItem="oNr-j7-cLf" secondAttribute="leadingMargin" constant="6" id="Izg-9O-M7Y"/>
                             <constraint firstItem="3lp-50-nOE" firstAttribute="top" secondItem="ykE-lt-Ben" secondAttribute="bottom" constant="14" id="May-ws-rBH"/>
                             <constraint firstItem="Xq8-hY-a3O" firstAttribute="leading" secondItem="oNr-j7-cLf" secondAttribute="leading" id="NK8-3o-RG9"/>
+                            <constraint firstItem="MWU-JB-mGa" firstAttribute="top" secondItem="3lp-50-nOE" secondAttribute="bottom" id="PfR-fC-ASN"/>
                             <constraint firstItem="n50-mC-u6c" firstAttribute="top" secondItem="2Qg-lM-l1J" secondAttribute="bottom" constant="19" id="Pjq-AS-Cpa"/>
                             <constraint firstItem="XpB-wG-mbb" firstAttribute="leading" secondItem="oNr-j7-cLf" secondAttribute="leadingMargin" constant="6" id="S6h-QF-6Kq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Emf-GT-tjA" secondAttribute="trailing" id="Tlu-Ic-CWt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MWU-JB-mGa" secondAttribute="trailing" constant="6" id="Tus-7n-QNl"/>
                             <constraint firstItem="ykE-lt-Ben" firstAttribute="top" secondItem="XpB-wG-mbb" secondAttribute="bottom" constant="8" id="UXu-x7-ZaN"/>
                             <constraint firstItem="Xqp-3Z-tTA" firstAttribute="top" secondItem="3lp-50-nOE" secondAttribute="bottom" constant="31" id="Ujk-5E-GCR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XpB-wG-mbb" secondAttribute="trailing" constant="6" id="YhP-3k-fI2"/>
@@ -838,6 +849,8 @@
                         <outlet property="mediumTimeLabel" destination="2Qg-lM-l1J" id="Wau-dS-YA0"/>
                         <outlet property="nNLogoImageView" destination="3lp-50-nOE" id="hFf-z5-HZ6"/>
                         <outlet property="newGameButton" destination="hdP-Je-Sa7" id="rOb-UZ-fmh"/>
+                        <outlet property="newTopTimeLabel" destination="MWU-JB-mGa" id="uWm-1D-0ho"/>
+                        <outlet property="titleLabel" destination="hJc-Ba-FVh" id="Me7-lT-HJV"/>
                         <segue destination="K4i-nI-VAL" kind="popoverPresentation" identifier="menuSegue" popoverAnchorView="2fr-IL-Uht" id="zZl-8c-UoE">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
                         </segue>
@@ -858,9 +871,9 @@
         <image name="MenuIconWhite" width="226" height="148"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xQw-8L-hUy"/>
-        <segue reference="7KR-v9-Ej4"/>
-        <segue reference="xzg-C4-cHS"/>
+        <segue reference="xj6-VI-Ivs"/>
+        <segue reference="QLL-Xy-uk2"/>
+        <segue reference="zZl-8c-UoE"/>
         <segue reference="efs-Hu-uGu"/>
     </inferredMetricsTieBreakers>
 </document>
