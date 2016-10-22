@@ -14,35 +14,18 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     @IBOutlet var myButtons: [UIButton]!
     @IBOutlet weak var difficultyLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var introAppImage: UIImageView!
+    @IBOutlet weak var introBackgroundImage: UIImageView!
+    @IBOutlet weak var menuButton: UIButton!
+    static var appJustLoaded = true
+
     
-    // Variable for setting up opening annimation
-    var introMask : CALayer? = CALayer()
-        
     override func viewDidLoad() {
         super.viewDidLoad()
-  /*
-        // Set up opening animation
-        //introMask = CALayer()
-        introMask!.contents = UIImage(named: "MiddleOfIcon")?.cgImage
-        introMask!.contentsGravity = kCAGravityResizeAspect
-        introMask!.bounds = CGRect(x: 0, y: 0, width: 100, height: 100)
-        introMask!.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        introMask!.position = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height/2)
-        
-        // Add intro picture as mask
-        self.introImageView.layer.mask = introMask
-        
-        // Add surrounding color
-        //self.introImageView.backgroundColor = UIColor(red: 0, green: 102/255, blue: 255/255, alpha: 1.0)
-        
-        // Call function to animate app intro
-        animate()
-        
- 
- */
+
         // Format the labels
         difficultyLabel.font = UIFont (name: "ArialRoundedMTBold", size: 28)
-        difficultyLabel.alpha = 0
+        //difficultyLabel.alpha = 1.0
         
         titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
         
@@ -54,50 +37,54 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
             button.layer.shadowOpacity = 1.0
             button.layer.shadowRadius = 0
             button.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+            button.isEnabled = false  // Disable buttons until animation completes
             //button.alpha = 0
         }
+
+        // Disable button until animation complete
+        menuButton.isEnabled = false
         
-        beginApplication()
+        
+        if ViewController.appJustLoaded {
+            ViewController.appJustLoaded = false
+            introAnimation()
+        }
+        else {
+            self.introBackgroundImage.alpha = 0
+            self.introBackgroundImage.isHidden = true
+            self.introAppImage.alpha = 0
+            self.introAppImage.isHidden = true
+
+        }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+
+        // Enable buttons since animation is not complete
+        for button in myButtons {
+            button.isEnabled = true
+        }
+        
+        menuButton.isEnabled = true
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
-    func beginApplication () {
+    func introAnimation () {
 
-        // Display contents with animations
-        difficultyLabel.fadeInView()
-        
-//        for button in myButtons {
-//            button.fadeInView()
-//        }
-    }
-    
-    func animate() {
-        let keyFrameAnimation = CAKeyframeAnimation(keyPath: "bounds")
-        //keyFrameAnimation.delegate = self
-        keyFrameAnimation.duration = 1
-        keyFrameAnimation.beginTime = CACurrentMediaTime() + 1
-        
-        // Begin the animation
-        let firstBounds = NSValue(cgRect:introMask!.bounds)
-        
-        // These parameters create a zoom out then zoom in effect
-        let midBounds = NSValue(cgRect: CGRect(x: 0, y: 0, width: 90, height: 90))
-        let lastBounds = NSValue(cgRect: CGRect(x: 0, y: 0, width: 1500, height: 1500))
-        
-        // Add values to key frame animation
-        keyFrameAnimation.values = [firstBounds, midBounds, lastBounds]
-        keyFrameAnimation.keyTimes = [0, 0.4, 1]
-        
-        // Define animations
-        keyFrameAnimation.timingFunctions = [CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut), CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)]
-        
-        // Create animation
-        self.introMask?.add(keyFrameAnimation, forKey: "bounds")
-        
+        // Animate application opening the first time it is opened
+        UIView.animate(withDuration: 0.7, delay: 0.3, options: .curveEaseOut, animations: {
+            self.introBackgroundImage.transform = CGAffineTransform(scaleX: 5, y: 5)}
+            
+            ,completion: { finish in
+                
+                self.introBackgroundImage.alpha = 0
+                self.introBackgroundImage.isHidden = true
+                self.introAppImage.fadeOutView(duration: 0.3)
+        })
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

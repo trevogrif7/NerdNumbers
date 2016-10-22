@@ -28,7 +28,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqS-jz-LMJ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqS-jz-LMJ" userLabel="menuButton">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="dl3-lB-vIV"/>
                                     <constraint firstAttribute="height" constant="25" id="sZa-sB-e3Q"/>
@@ -105,6 +105,14 @@
                                     <segue destination="xWc-xi-Nl2" kind="show" identifier="easySegue" id="efs-Hu-uGu"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="AppIntroImage_BlankCenter" translatesAutoresizingMaskIntoConstraints="NO" id="YI6-xS-QlS">
+                                <frame key="frameInset"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="AppIntroImage_Center" translatesAutoresizingMaskIntoConstraints="NO" id="xB9-pi-JN8">
+                                <frame key="frameInset" minX="40" minY="161" maxX="40" maxY="328"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.23605476219999999" green="0.83421240480000003" blue="0.4296016835" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -132,6 +140,9 @@
                     </view>
                     <connections>
                         <outlet property="difficultyLabel" destination="LVz-M8-9cf" id="nGr-ro-YUF"/>
+                        <outlet property="introAppImage" destination="xB9-pi-JN8" id="42s-Ol-nkm"/>
+                        <outlet property="introBackgroundImage" destination="YI6-xS-QlS" id="Fcn-2P-5HL"/>
+                        <outlet property="menuButton" destination="lqS-jz-LMJ" id="CXi-Sl-At0"/>
                         <outlet property="titleLabel" destination="KiS-8A-TGA" id="yRM-D4-alt"/>
                         <outletCollection property="myButtons" destination="8X3-4O-VCa" collectionClass="NSMutableArray" id="Q06-LI-loQ"/>
                         <outletCollection property="myButtons" destination="jHf-M3-xh9" collectionClass="NSMutableArray" id="ZVz-TI-isH"/>
@@ -525,7 +536,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XqB-VL-9J4">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XqB-VL-9J4" userLabel="menuButton">
                                 <constraints>
                                     <constraint firstAttribute="width" constant="35" id="TVM-AF-cpN"/>
                                     <constraint firstAttribute="height" constant="25" id="lfv-kX-SxY"/>
@@ -622,6 +633,7 @@
                         <outlet property="decimalRightWrongLabel" destination="sgx-4n-Tl6" id="Wk1-kH-smf"/>
                         <outlet property="enterButton" destination="W7L-lR-uYK" id="CN0-GS-WQe"/>
                         <outlet property="incorrectAnswerHintLabel" destination="izN-KI-XSL" id="UJz-jG-w03"/>
+                        <outlet property="menuButton" destination="XqB-VL-9J4" id="uXh-mH-1Ht"/>
                         <outlet property="timerLabel" destination="IIY-PU-kK2" id="hBS-od-WTP"/>
                         <outlet property="titleLabel" destination="p0t-vm-HaV" id="8vY-zB-ePk"/>
                         <outlet property="whatIsTheBinaryValueLabel" destination="ajm-Mz-3ye" id="SLH-wK-2oJ"/>
@@ -758,7 +770,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fr-IL-Uht">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2fr-IL-Uht" userLabel="menuButton">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="Gh0-zC-1Hl"/>
                                     <constraint firstAttribute="width" constant="35" id="WD5-aa-A2a"/>
@@ -847,6 +859,7 @@
                         <outlet property="easyTimeLabel" destination="cj5-h1-pR0" id="n7x-JJ-GJv"/>
                         <outlet property="hardTimeLabel" destination="n50-mC-u6c" id="Hqw-MF-ZUE"/>
                         <outlet property="mediumTimeLabel" destination="2Qg-lM-l1J" id="Wau-dS-YA0"/>
+                        <outlet property="menuButton" destination="2fr-IL-Uht" id="Il0-Y4-GXw"/>
                         <outlet property="nNLogoImageView" destination="3lp-50-nOE" id="hFf-z5-HZ6"/>
                         <outlet property="newGameButton" destination="hdP-Je-Sa7" id="rOb-UZ-fmh"/>
                         <outlet property="newTopTimeLabel" destination="MWU-JB-mGa" id="uWm-1D-0ho"/>
@@ -868,12 +881,14 @@
     </scenes>
     <resources>
         <image name="512x512_iTunesArtwork" width="512" height="512"/>
+        <image name="AppIntroImage_BlankCenter" width="621" height="1104"/>
+        <image name="AppIntroImage_Center" width="439" height="446"/>
         <image name="MenuIconWhite" width="226" height="148"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="efs-Hu-uGu"/>
         <segue reference="xj6-VI-Ivs"/>
         <segue reference="QLL-Xy-uk2"/>
-        <segue reference="zZl-8c-UoE"/>
-        <segue reference="efs-Hu-uGu"/>
+        <segue reference="7KR-v9-Ej4"/>
     </inferredMetricsTieBreakers>
 </document>

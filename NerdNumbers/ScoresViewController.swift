@@ -22,6 +22,7 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var nNLogoImageView: UIImageView!
     @IBOutlet weak var newGameButton: UIButton!
     @IBOutlet weak var newTopTimeLabel: UILabel!
+    @IBOutlet weak var menuButton: UIButton!
    
     //// Define variables ////
     
@@ -240,7 +241,7 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
     
     
     // Called when the second button on popover view is pressed (it will be "Clear Scores" in this case
-    func button2Pressed() {
+    func menuButton2Pressed() {
 
         let defaults = UserDefaults.standard
 

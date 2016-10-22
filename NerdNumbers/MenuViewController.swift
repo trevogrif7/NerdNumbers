@@ -9,7 +9,7 @@
 import UIKit
 
 protocol MyMenuDelegate{
-    func button2Pressed()
+    func menuButton2Pressed()
 }
 
 
@@ -100,7 +100,7 @@ class MenuViewController: UIViewController {
             
             if self.delegate != nil {
                 dismiss(animated: true, completion: nil)
-                self.delegate?.button2Pressed()
+                self.delegate?.menuButton2Pressed()
                 // Dismiss the popover
             }
 

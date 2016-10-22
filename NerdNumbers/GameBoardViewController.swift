@@ -21,6 +21,7 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     @IBOutlet weak var counterLabel: UILabel!
     @IBOutlet weak var countdownLabel: UILabel!
     @IBOutlet weak var incorrectAnswerHintLabel: UILabel!
+    @IBOutlet weak var menuButton: UIButton!
 
     //// Define variables ////
     
@@ -50,10 +51,10 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     // Random decimal integer to be converted
     var randomDecimalNumber = 0
     
-    // Temporarily hold decimal value when menu is selected
+    // Temporarily hold decimal value when menu is selected or application goes into the background
     var tempDecimalValue = ""
-    var countdownTimerWasPaused = false
-    var gameTimerWasPaused = false
+    var countdownTimerIsPaused = false
+    var gameTimerIsPaused = false
     
     
     override func viewDidLoad() {
@@ -104,8 +105,14 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         enterButton.layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
         enterButton.isEnabled = false
         
+        // Sign up to be notified when application enters and exits the backgrond
+        NotificationCenter.default.addObserver(self, selector: #selector(appEnteringBackground), name: NSNotification.Name(rawValue: "PauseApp"), object: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(appHasBecomeActive), name: NSNotification.Name(rawValue: "ResumeApp"), object: nil)
+
+        
         // Begin countdown timer
-        countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameBoardViewController.startGame), userInfo: nil, repeats: true)
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startGame), userInfo: nil, repeats: true)
 
     }
 
@@ -367,11 +374,11 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     @IBAction func menuButtonPressed(_ sender: UIButton) {
         if countdownTimer.isValid {
             countdownTimer.invalidate()
-            countdownTimerWasPaused = true
+            countdownTimerIsPaused = true
         }
         else if gameTimer.isValid {
             gameTimer.invalidate()
-            gameTimerWasPaused = true
+            gameTimerIsPaused = true
         }
         
         tempDecimalValue = decimalLabel.text!
@@ -385,18 +392,44 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
        
         decimalLabel.text = tempDecimalValue
        
-        if countdownTimerWasPaused {
+        if countdownTimerIsPaused {
             countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameBoardViewController.startGame), userInfo: nil, repeats: true)
-            countdownTimerWasPaused = false
+            countdownTimerIsPaused = false
         }
         
-        if gameTimerWasPaused {
+        if gameTimerIsPaused {
             gameTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
-            gameTimerWasPaused = false
+            gameTimerIsPaused = false
         }
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+    
+    // 
+    func appEnteringBackground() {
+        if countdownTimer.isValid {
+            countdownTimer.invalidate()
+            countdownTimerIsPaused = true
+        }
+        else if gameTimer.isValid {
+            gameTimer.invalidate()
+            gameTimerIsPaused = true
+        }
+    }
+    
+    func appHasBecomeActive() {
+        
+        if countdownTimerIsPaused {
+            countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameBoardViewController.startGame), userInfo: nil, repeats: true)
+            countdownTimerIsPaused = false
+        }
+        
+        if gameTimerIsPaused {
+            gameTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
+            gameTimerIsPaused = false
+        }
+
     }
 }
