@@ -24,6 +24,13 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
     @IBOutlet weak var newTopTimeLabel: UILabel!
     @IBOutlet weak var menuButton: UIButton!
    
+    // Constraints
+    @IBOutlet weak var currentTimeLabelVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mediumTitleLabelVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mediumTimeValueVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var hardTitleLabelVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var hardTimeValueVerticalConstraint: NSLayoutConstraint!
+
     //// Define variables ////
     
     // Variables to regulate the timer used for running score animation
@@ -48,8 +55,41 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
     var mediumBestTime : String?
     var hardBestTime : String?
     
+    // Screen size
+    let screenSize: CGRect = UIScreen.main.bounds
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Format the labels and buttons to fit properly based on device size
+        if (screenSize.width <= 320) {
+            currentTimeLabelVerticalConstraint.constant = 10.0
+
+            mediumTitleLabelVerticalConstraint.constant = 5.0
+            mediumTimeValueVerticalConstraint.constant = 5.0
+            hardTitleLabelVerticalConstraint.constant = 5.0
+            hardTimeValueVerticalConstraint.constant = 5.0
+            
+            easyTimeLabel.font = UIFont (name: "ArialMT", size: 17)
+            mediumTimeLabel.font = UIFont (name: "ArialMT", size: 17)
+            hardTimeLabel.font = UIFont (name: "ArialMT", size: 17)
+            bestEasyTimeLabel.font = UIFont (name: "ArialMT", size: 17)
+            bestMediumTimeLabel.font = UIFont (name: "ArialMT", size: 17)
+            bestHardTimeLabel.font = UIFont (name: "ArialMT", size: 17)
+
+            
+        }
+        else if screenSize.width >= 414 {
+           // Currently no need to do anything specific for larger phones
+        }
+        else {
+            easyTimeLabel.font = UIFont (name: "ArialMT", size: 20)
+            mediumTimeLabel.font = UIFont (name: "ArialMT", size: 20)
+            hardTimeLabel.font = UIFont (name: "ArialMT", size: 20)
+            bestEasyTimeLabel.font = UIFont (name: "ArialMT", size: 20)
+            bestMediumTimeLabel.font = UIFont (name: "ArialMT", size: 20)
+            bestHardTimeLabel.font = UIFont (name: "ArialMT", size: 20)
+        }
         
         // Format Labels
         titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
@@ -58,19 +98,12 @@ class ScoresViewController: UIViewController, UIPopoverPresentationControllerDel
         newTopTimeLabel.text = "New Top Time!"
         newTopTimeLabel.alpha = 0
         
-        easyTimeLabel.font = UIFont (name: "ArialMT", size: 20)
-        mediumTimeLabel.font = UIFont (name: "ArialMT", size: 20)
-        hardTimeLabel.font = UIFont (name: "ArialMT", size: 20)
-
-        bestEasyTimeLabel.font = UIFont (name: "ArialMT", size: 20)
         bestEasyTimeLabel.text = "N/A seconds"
         bestEasyTimeLabel.textColor = UIColor.black
         
-        bestMediumTimeLabel.font = UIFont (name: "ArialMT", size: 20)
         bestMediumTimeLabel.text = "N/A seconds"
         bestMediumTimeLabel.textColor = UIColor.black
         
-        bestHardTimeLabel.font = UIFont (name: "ArialMT", size: 20)
         bestHardTimeLabel.text = "N/A seconds"
         bestHardTimeLabel.textColor = UIColor.black
         

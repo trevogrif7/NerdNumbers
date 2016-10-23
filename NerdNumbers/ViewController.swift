@@ -17,19 +17,32 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     @IBOutlet weak var introAppImage: UIImageView!
     @IBOutlet weak var introBackgroundImage: UIImageView!
     @IBOutlet weak var menuButton: UIButton!
+    @IBOutlet weak var difficultyLabelVerticalConstraint: NSLayoutConstraint!
+    
     static var appJustLoaded = true
 
+    // Figure out the size of the device
+    let screenSize: CGRect = UIScreen.main.bounds
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Format the labels
-        difficultyLabel.font = UIFont (name: "ArialRoundedMTBold", size: 28)
-        //difficultyLabel.alpha = 1.0
+        
+        // Format the labels and buttons based on device size
+        if (screenSize.width <= 320) {
+            difficultyLabel.font = UIFont (name: "ArialRoundedMTBold", size: 22)
+            difficultyLabelVerticalConstraint.constant = 60.0
+        }
+        else if screenSize.width >= 414 {
+            difficultyLabel.font = UIFont (name: "ArialRoundedMTBold", size: 32)
+            difficultyLabelVerticalConstraint.constant = 150.0
+        }
+        else{
+            difficultyLabel.font = UIFont (name: "ArialRoundedMTBold", size: 28)
+        }
         
         titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
         
-        // Format the buttons
+        // Format the buttons look
         for button in myButtons {
             button.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 19)
             button.layer.shadowColor = UIColor.darkGray.cgColor
@@ -44,7 +57,7 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
         // Disable button until animation complete
         menuButton.isEnabled = false
         
-        
+        // Only run the intro animation when the app is first opened
         if ViewController.appJustLoaded {
             ViewController.appJustLoaded = false
             introAnimation()
@@ -54,7 +67,6 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
             self.introBackgroundImage.isHidden = true
             self.introAppImage.alpha = 0
             self.introAppImage.isHidden = true
-
         }
     }
 
@@ -76,15 +88,16 @@ class ViewController: UIViewController, UIPopoverPresentationControllerDelegate 
     func introAnimation () {
 
         // Animate application opening the first time it is opened
-        UIView.animate(withDuration: 0.7, delay: 0.3, options: .curveEaseOut, animations: {
-            self.introBackgroundImage.transform = CGAffineTransform(scaleX: 5, y: 5)}
+        UIView.animate(withDuration: 1.0, delay: 0.3, options: .curveEaseOut, animations: {
+            self.introBackgroundImage.transform = CGAffineTransform(scaleX: 10, y: 20)}
             
             ,completion: { finish in
                 
                 self.introBackgroundImage.alpha = 0
                 self.introBackgroundImage.isHidden = true
-                self.introAppImage.fadeOutView(duration: 0.3)
+                self.introAppImage.fadeOutView(duration: 0.5)
         })
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

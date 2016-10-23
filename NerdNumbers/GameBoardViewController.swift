@@ -23,6 +23,30 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     @IBOutlet weak var incorrectAnswerHintLabel: UILabel!
     @IBOutlet weak var menuButton: UIButton!
 
+    // Constraints
+    @IBOutlet weak var decimalLabelVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var incorrectHintLabelVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var mostSignificantBinaryStackViewContraint: NSLayoutConstraint!
+    @IBOutlet weak var topToSecondStackConstraint: NSLayoutConstraint!
+    @IBOutlet weak var secondToThirdStackConstraint: NSLayoutConstraint!
+    @IBOutlet weak var thirdToFourthStackConstraint: NSLayoutConstraint!
+    @IBOutlet weak var fifteenthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var fourteenthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var thirteenthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var twelfthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var eleventhBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tenthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var ninthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var eighthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var seventhBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var sixthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var fifthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var fourthBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var thirdBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var secondBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var firstBinaryDigitConstraint: NSLayoutConstraint!
+    @IBOutlet weak var zerothBinaryDigitConstraint: NSLayoutConstraint!
+
     //// Define variables ////
     
     // Variables to regulate the countdown timer
@@ -56,11 +80,63 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     var countdownTimerIsPaused = false
     var gameTimerIsPaused = false
     
+    // Screen size
+    let screenSize: CGRect = UIScreen.main.bounds
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Format the labels
+        // Format the labels and buttons to fit properly based on device size
+        if (screenSize.width <= 320) {
+            decimalLabelVerticalConstraint.constant = 60.0
+            incorrectHintLabelVerticalConstraint.constant = 10.0
+            incorrectAnswerHintLabel.font = UIFont (name: "Arial-BoldMT", size: 18)
+
+            whatIsTheBinaryValueLabel.font = UIFont (name: "ArialRoundedMTBold", size: 20)
+
+            countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 350)
+            
+            for button in myBinaryDigitButtons {
+                button.titleLabel?.font = UIFont(name: "Helvetica-Bold", size: 28)
+            }
+            
+            mostSignificantBinaryStackViewContraint.constant = -120.0
+            
+            topToSecondStackConstraint.constant = 6
+            secondToThirdStackConstraint.constant = 6
+            thirdToFourthStackConstraint.constant = 6
+            
+            fifteenthBinaryDigitConstraint.constant = 18
+            fourteenthBinaryDigitConstraint.constant = 18
+            thirteenthBinaryDigitConstraint.constant = 18
+            twelfthBinaryDigitConstraint.constant = 18
+            eleventhBinaryDigitConstraint.constant = 18
+            tenthBinaryDigitConstraint.constant = 18
+            ninthBinaryDigitConstraint.constant = 18
+            eighthBinaryDigitConstraint.constant = 18
+            seventhBinaryDigitConstraint.constant = 18
+            sixthBinaryDigitConstraint.constant = 18
+            fifthBinaryDigitConstraint.constant = 18
+            fourthBinaryDigitConstraint.constant = 18
+            thirdBinaryDigitConstraint.constant = 18
+            secondBinaryDigitConstraint.constant = 18
+            firstBinaryDigitConstraint.constant = 18
+            zerothBinaryDigitConstraint.constant = 18
+           
+        }
+        else if screenSize.width >= 414 {
+             decimalLabelVerticalConstraint.constant = 150.0
+
+        }
+        else {
+            incorrectAnswerHintLabel.font = UIFont (name: "Arial-BoldMT", size: 20)
+            whatIsTheBinaryValueLabel.font = UIFont (name: "ArialRoundedMTBold", size: 25)
+            countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 375)
+        }
+        
+        // Continue formating labels and buttons which aren't device specific
+        incorrectAnswerHintLabel.alpha = 0.0
+
         decimalLabel.font = UIFont (name: "ArialMT", size: 80)
         decimalLabel.text = ""
         decimalLabel.layer.borderColor = UIColor.darkGray.cgColor
@@ -71,24 +147,17 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         decimalRightWrongLabel.layer.borderWidth = 2.0
         decimalRightWrongLabel.alpha = 0.0
         
-        whatIsTheBinaryValueLabel.font = UIFont (name: "ArialRoundedMTBold", size: 25)
-        
         titleLabel.font = UIFont (name: "ArialRoundedMTBold", size: 19)
         
         timerLabel.font = UIFont (name: "Courier-Bold", size: 30)
         timerLabel.text = "0.0"
         
-        countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 375)
         countdownLabel.alpha = 0.0
         
         counterLabel.font = UIFont (name: "Courier-Bold", size: 13)
         
-        incorrectAnswerHintLabel.font = UIFont (name: "Arial-BoldMT", size: 20)
-        incorrectAnswerHintLabel.alpha = 0.0
-
-        // Format the buttons
+        // Format the binary digit buttons with a loop
         for button in myBinaryDigitButtons {
-            //button.titleLabel?.font = UIFont (name: "ArialRoundedMTBold", size: 30)
             button.layer.shadowColor = UIColor.darkGray.cgColor
             button.layer.masksToBounds = false
             button.layer.shadowOpacity = 1.0
@@ -109,11 +178,9 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         NotificationCenter.default.addObserver(self, selector: #selector(appEnteringBackground), name: NSNotification.Name(rawValue: "PauseApp"), object: nil)
 
         NotificationCenter.default.addObserver(self, selector: #selector(appHasBecomeActive), name: NSNotification.Name(rawValue: "ResumeApp"), object: nil)
-
         
         // Begin countdown timer
         countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(startGame), userInfo: nil, repeats: true)
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -149,7 +216,7 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         // Display "GO!" for the last second
         if timeToStartGame == true {
             countdownLabel.text = "GO!"
-            countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 175)
+            countdownLabel.font = UIFont (name: "ArialRoundedMTBold", size: 150)
             
             // Display then fade out countdown label
             countdownLabel.alpha = 0.7
@@ -390,6 +457,7 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     
     func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
        
+        // Resume timers and replace decimal number when the menu is exited
         decimalLabel.text = tempDecimalValue
        
         if countdownTimerIsPaused {
@@ -407,8 +475,8 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         return .none
     }
     
-    // 
     func appEnteringBackground() {
+        // Pause timers when entering the background
         if countdownTimer.isValid {
             countdownTimer.invalidate()
             countdownTimerIsPaused = true
@@ -420,7 +488,7 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     }
     
     func appHasBecomeActive() {
-        
+        // Unpause timers when entering the foreground
         if countdownTimerIsPaused {
             countdownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(GameBoardViewController.startGame), userInfo: nil, repeats: true)
             countdownTimerIsPaused = false
