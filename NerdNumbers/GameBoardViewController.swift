@@ -126,6 +126,7 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         }
         else if screenSize.width >= 414 {
              decimalLabelVerticalConstraint.constant = 150.0
+            incorrectAnswerHintLabel.font = UIFont (name: "Arial-BoldMT", size: 20)
 
         }
         else {
