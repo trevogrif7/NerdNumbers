@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class GameBoardViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
@@ -82,6 +83,9 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
     
     // Screen size
     let screenSize: CGRect = UIScreen.main.bounds
+    
+    // Audio Player
+    var audioPlayer = AVAudioPlayer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -329,11 +333,18 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
                 counterLabel.text = "10/10"
             case "10/10":
                 endGame()
+     
+                // Play "youWin" sound effect
+                playSoundEffect(soundEffect: "youWin")
+
                 return
             default:
                 break
             }
             
+            // Play "correctAnswer" sound effect
+            playSoundEffect(soundEffect: "correctAnswer")
+
             // Set all binary digit buttons to zero
             setBinaryDigitsToZero()
             
@@ -349,6 +360,9 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         
         // Incorrect, binary value does not match decimal value, try again
         else {
+
+            // Play "wrongAnswer" sound effect
+            playSoundEffect(soundEffect: "wrongAnswer")
 
             // Set all binary digits to "0"
             setBinaryDigitsToZero()
@@ -394,6 +408,9 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
         else {
             sender.setTitle("0", for: UIControlState.normal)
         }
+        
+        // Play "shortTicSound" sound effect
+        playSoundEffect(soundEffect: "shortTicSound")
     }
     
     func endGame() {
@@ -499,6 +516,32 @@ class GameBoardViewController: UIViewController, UIPopoverPresentationController
             gameTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(GameBoardViewController.incrementTimer), userInfo: nil, repeats: true)
             gameTimerIsPaused = false
         }
-
+    }
+    
+    func playSoundEffect(soundEffect: String) {
+        
+        // Set up sound effect
+        let newSound = NSURL(fileURLWithPath: Bundle.main.path(forResource: soundEffect, ofType: "aifc")!)
+        
+        
+        // Prepare audio session
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+            print("ERROR: AVAudioSession setup failed")
+        }
+        
+        
+        // Play Sound
+        do {
+            try audioPlayer = AVAudioPlayer(contentsOf: newSound as URL)
+        } catch {
+            print("ERROR: audioPlayer initialization failed")
+        }
+        
+        audioPlayer.prepareToPlay()
+        audioPlayer.play()
+        
     }
 }

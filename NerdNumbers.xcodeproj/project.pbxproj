@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		080446031DB3149500BB2E8F /* ScoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080446021DB3149500BB2E8F /* ScoresViewController.swift */; };
 		080446051DB4396B00BB2E8F /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080446041DB4396B00BB2E8F /* MenuViewController.swift */; };
+		0806A37B1DD6E741008B2266 /* shortTicSound.aifc in Resources */ = {isa = PBXBuildFile; fileRef = 0806A37A1DD6E741008B2266 /* shortTicSound.aifc */; };
+		0806A37F1DD6EE4A008B2266 /* correctAnswer.aifc in Resources */ = {isa = PBXBuildFile; fileRef = 0806A37C1DD6EE4A008B2266 /* correctAnswer.aifc */; };
+		0806A3801DD6EE4A008B2266 /* wrongAnswer.aifc in Resources */ = {isa = PBXBuildFile; fileRef = 0806A37D1DD6EE4A008B2266 /* wrongAnswer.aifc */; };
+		0806A3811DD6EE4A008B2266 /* youWin.aifc in Resources */ = {isa = PBXBuildFile; fileRef = 0806A37E1DD6EE4A008B2266 /* youWin.aifc */; };
 		082CF9FB1DAF1DA5009F0D1B /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082CF9FA1DAF1DA5009F0D1B /* UIViewExtensions.swift */; };
 		085345DF1DA768FB004904C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085345DE1DA768FB004904C8 /* AppDelegate.swift */; };
 		085345E11DA768FB004904C8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085345E01DA768FB004904C8 /* ViewController.swift */; };
@@ -22,6 +26,10 @@
 /* Begin PBXFileReference section */
 		080446021DB3149500BB2E8F /* ScoresViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoresViewController.swift; sourceTree = "<group>"; };
 		080446041DB4396B00BB2E8F /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		0806A37A1DD6E741008B2266 /* shortTicSound.aifc */ = {isa = PBXFileReference; lastKnownFileType = file; path = shortTicSound.aifc; sourceTree = "<group>"; };
+		0806A37C1DD6EE4A008B2266 /* correctAnswer.aifc */ = {isa = PBXFileReference; lastKnownFileType = file; path = correctAnswer.aifc; sourceTree = "<group>"; };
+		0806A37D1DD6EE4A008B2266 /* wrongAnswer.aifc */ = {isa = PBXFileReference; lastKnownFileType = file; path = wrongAnswer.aifc; sourceTree = "<group>"; };
+		0806A37E1DD6EE4A008B2266 /* youWin.aifc */ = {isa = PBXFileReference; lastKnownFileType = file; path = youWin.aifc; sourceTree = "<group>"; };
 		082CF9FA1DAF1DA5009F0D1B /* UIViewExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		085345DB1DA768FB004904C8 /* NerdNumbers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NerdNumbers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		085345DE1DA768FB004904C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +53,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0806A3791DD6E5BF008B2266 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				0806A37C1DD6EE4A008B2266 /* correctAnswer.aifc */,
+				0806A37D1DD6EE4A008B2266 /* wrongAnswer.aifc */,
+				0806A37E1DD6EE4A008B2266 /* youWin.aifc */,
+				0806A37A1DD6E741008B2266 /* shortTicSound.aifc */,
+			);
+			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
 		085345D21DA768FB004904C8 = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +83,7 @@
 		085345DD1DA768FB004904C8 /* NerdNumbers */ = {
 			isa = PBXGroup;
 			children = (
+				0806A3791DD6E5BF008B2266 /* SupportingFiles */,
 				085345DE1DA768FB004904C8 /* AppDelegate.swift */,
 				085345E01DA768FB004904C8 /* ViewController.swift */,
 				085345E21DA768FB004904C8 /* Main.storyboard */,
@@ -139,9 +159,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0806A37B1DD6E741008B2266 /* shortTicSound.aifc in Resources */,
 				085345EC1DA768FB004904C8 /* LaunchScreen.storyboard in Resources */,
+				0806A3801DD6EE4A008B2266 /* wrongAnswer.aifc in Resources */,
 				085345E91DA768FB004904C8 /* Assets.xcassets in Resources */,
 				085345E41DA768FB004904C8 /* Main.storyboard in Resources */,
+				0806A3811DD6EE4A008B2266 /* youWin.aifc in Resources */,
+				0806A37F1DD6EE4A008B2266 /* correctAnswer.aifc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
